@@ -1,6 +1,0 @@
-hola es un identificador
-adios es un identificador
-x1 es un identificador
-x_2 es un identificador
-"hola como estas " es una cadena"$&536445jtdj()" es una cadena3.987E-2 es una constante real0.341 es una constante reale10 es un identificador
-413.23434 es una constante real
