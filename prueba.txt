@@ -1,3 +1,7 @@
 hola adios
 x1
 x_2
+"hola como estas "
+"$&536445jtdj()" 3.987E-2
+0.341e10
+413.23434

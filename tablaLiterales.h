@@ -29,10 +29,12 @@ void mostrar_tabla_literales(FILE *archivo,listaLiterales lista){
         fprintf(archivo,"Tabla de literales vacia");
     else{
         tablaLiterales *actual=lista.primerRegistro;
-        fprintf(archivo," ________________\n");
-	    fprintf(archivo,"|Posicion|Cadena| \n");        
+        fprintf(archivo," TABLA DE CADENAS\n");
+        fprintf(archivo," _____________________________________\n");
+	    fprintf(archivo,"|Posicion|         Cadena            |  \n");
+        fprintf(archivo,"--------------------------------------  \n");     
         while(actual !=0){
-            fprintf(archivo,"  %d \t   %s",actual->pos,actual->cadena);
+            fprintf(archivo,"  %d \t   %s \n",actual->pos,actual->cadena);
             actual=actual->siguienteRegistro;
         }
     }
@@ -67,7 +69,7 @@ int buscar_registro_literales(listaLiterales *lista, char* cadena){
 
 /*Esta función agrega los registros a la tabla de símbolos, haciendo uso de memoria 
 dinámica y validando la existencia de los nombres*/
-void agregar_registro_literales(listaLiterales *lista, char* cadena, int tipo){
+void agregar_registro_literales(listaLiterales *lista, char* cadena){
     if (lista->primerRegistro==NULL)
     {
         tablaLiterales *registro = (tablaLiterales*)malloc(sizeof(tablaLiterales));
@@ -85,6 +87,7 @@ void agregar_registro_literales(listaLiterales *lista, char* cadena, int tipo){
             posicion++;
         }
 
+        posicion++;
         tablaLiterales *nuevoRegistro;
         nuevoRegistro=(tablaLiterales*)malloc(sizeof(tablaLiterales));
         nuevoRegistro->pos=posicion;
