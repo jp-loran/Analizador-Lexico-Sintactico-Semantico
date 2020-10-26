@@ -5,6 +5,7 @@
 
 /*La tabla se símbolos se manejará como una lista ligada
 cada nodo de la lista es una estructura con los campos requeridos*/
+int posicion=0;
 typedef struct tablaSimbolos{
     int pos;
     char* nombre;
@@ -54,11 +55,9 @@ int buscar_registro_simbolo(listaSimbolos *lista, char* nombre){
         if(!strcmp(actual->nombre, nombre)){
             return 0;
         }
-        int posicion=0;
         while (actual->siguienteRegistro != 0)
         {
             actual=actual->siguienteRegistro;
-            posicion++;
             if(!strcmp(actual->nombre, nombre)){
             return posicion;
             }
@@ -75,22 +74,20 @@ void agregar_registro_simbolo(listaSimbolos *lista, char* nombre, int tipo){
         if (lista->primerRegistro==NULL)
         {
             tablaSimbolos *registro = (tablaSimbolos*)malloc(sizeof(tablaSimbolos));
-            registro->pos=0;
+            registro->pos=posicion;
             registro->nombre=nombre;
             registro->tipo=tipo;
             registro->siguienteRegistro=NULL;
             lista->primerRegistro=registro;
+            posicion ++;
         }
         else
         {
             tablaSimbolos *actual = lista->primerRegistro;
-            int posicion;
             while(actual->siguienteRegistro != 0){
                 actual=actual->siguienteRegistro;
-                posicion++;
+                
             }
-
-            posicion++;
             tablaSimbolos *nuevoRegistro;
             nuevoRegistro=(tablaSimbolos*)malloc(sizeof(tablaSimbolos));
             nuevoRegistro->pos=posicion;
@@ -98,6 +95,7 @@ void agregar_registro_simbolo(listaSimbolos *lista, char* nombre, int tipo){
             nuevoRegistro->tipo=tipo;
             nuevoRegistro->siguienteRegistro=NULL;
             actual->siguienteRegistro=nuevoRegistro;
+            posicion ++;
         }
     }
 }
