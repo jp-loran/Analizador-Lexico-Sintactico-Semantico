@@ -17,7 +17,7 @@ typedef struct{
 }listaSimbolos;
 
 /*Con esta función inicializamos nuestra tabla de símbolos*/
-listaSimbolos crear_tabla(){
+listaSimbolos crear_tabla_simbolos(){
     listaSimbolos lista;
     lista.primerRegistro=NULL;
     return lista;

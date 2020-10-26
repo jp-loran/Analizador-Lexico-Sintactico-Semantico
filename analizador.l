@@ -11,7 +11,9 @@ Fecha de entrega: 29 de Octubre de 2020
 #include <stdio.h>
 #include <stdlib.h>
 #include "tablaSimbolos.h"
+#include "tablaLiterales.h"
 #include "tokens.h"
+#include "catalogos.h"
 %}
 %%
 %%
