@@ -39,6 +39,33 @@ void mostrar_tabla_simbolos(FILE *archivo,listaSimbolos lista){
     }
 }
 
+/*Esta función permite buscar un registro por su nombre
+Devuelve un -1 cuando la lista se encuentra vacía o cuando no hay coincidencia
+De lo contrario devuelve un 0*/
+int buscar_registro_simbolo(listaSimbolos *lista, char* nombre){
+    if(lista->primerRegistro==NULL){
+        return -1;
+    }
+    else
+    {
+        tablaSimbolos *actual = lista->primerRegistro;
+        if(!strcmp(actual->nombre, nombre)){
+            return 0;
+        }
+        int posicion=0;
+        while (actual->siguienteRegistro != 0)
+        {
+            actual=actual->siguienteRegistro;
+            posicion++;
+            if(!strcmp(actual->nombre, nombre)){
+            return posicion;
+            }
+        }
+        return -1;
+    }
+    
+}
+
 /*Esta función agrega los registros a la tabla de símbolos, haciendo uso de memoria 
 dinámica y validando la existencia de los nombres*/
 void agregar_registro_simbolo(listaSimbolos *lista, char* nombre, int tipo){
@@ -72,29 +99,3 @@ void agregar_registro_simbolo(listaSimbolos *lista, char* nombre, int tipo){
     }
 }
 
-/*Esta función permite buscar un registro por su nombre
-Devuelve un -1 cuando la lista se encuentra vacía o cuando no hay coincidencia
-De lo contrario devuelve un 0*/
-int buscar_registro_simbolo(listaSimbolos *lista, char* nombre){
-    if(lista->primerRegistro==NULL){
-        return -1;
-    }
-    else
-    {
-        tablaSimbolos *actual = lista->primerRegistro;
-        if(!strcmp(actual->nombre, nombre)){
-            return 0;
-        }
-        int posicion=0;
-        while (actual->siguienteRegistro != 0)
-        {
-            actual=actual->siguienteRegistro;
-            posicion++;
-            if(!strcmp(actual->nombre, nombre)){
-            return posicion;
-            }
-        }
-        return -1;
-    }
-    
-}

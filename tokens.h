@@ -10,7 +10,7 @@ typedef struct Token
     int clase;
     int posicion;
     struct Token* siguienteToken;
-}token;
+}Token;
 
 typedef struct 
 {
@@ -30,7 +30,7 @@ void mostrar_lista_tokens(FILE *archivo, listaTokens lista){
         fprintf(archivo, "Lista de tokens vacía");
     }
     else{
-        token *actual= lista.primerToken;
+        Token *actual= lista.primerToken;
         while (actual != 0)
         {
             fprintf(archivo, "(%d,%d)", actual->clase,actual->posicion);
