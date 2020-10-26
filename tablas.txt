@@ -1,0 +1,26 @@
+ TABLA DE SIMBOLOS
+ ____________________
+|Posicion|Nombre|Tipo| 
+ ---------------------
+	0 			hola		-1 
+	1 			adios		-1 
+	2 			x1		-1 
+	3 			x_2		-1 
+	4 			e10		-1 
+
+
+ TABLA DE CADENAS
+ _____________________________________
+|Posicion|         Cadena            |  
+--------------------------------------  
+  0 	   "hola como estas " 
+  1 	   "$&536445jtdj()" 
+
+
+ TABLA DE CONSTANTES
+ ________________________________
+|Posicion|       Constante      | 
+---------------------------------
+  0 		   3.987E-2 
+  1 		   0.341 
+  2 		   413.23434 

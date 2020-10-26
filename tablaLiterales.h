@@ -69,7 +69,7 @@ int buscar_registro_literales(listaLiterales *lista, char* cadena){
 
 /*Esta función agrega los registros a la tabla de símbolos, haciendo uso de memoria 
 dinámica y validando la existencia de los nombres*/
-void agregar_registro_literales(listaLiterales *lista, char* cadena){
+int agregar_registro_literales(listaLiterales *lista, char* cadena){
     if (lista->primerRegistro==NULL)
     {
         tablaLiterales *registro = (tablaLiterales*)malloc(sizeof(tablaLiterales));
@@ -77,6 +77,7 @@ void agregar_registro_literales(listaLiterales *lista, char* cadena){
         registro->cadena=cadena;
         registro->siguienteRegistro=NULL;
         lista->primerRegistro=registro;
+        return 0;
     }
     else
     {
@@ -94,6 +95,7 @@ void agregar_registro_literales(listaLiterales *lista, char* cadena){
         nuevoRegistro->cadena=cadena;
         nuevoRegistro->siguienteRegistro=NULL;
         actual->siguienteRegistro=nuevoRegistro;
+        return posicion;
     }
     
 }

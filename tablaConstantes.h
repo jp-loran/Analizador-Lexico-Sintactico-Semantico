@@ -42,7 +42,7 @@ void mostrar_tabla_constantes(FILE *archivo,listaConstantes lista){
 
 /*Esta función agrega los registros a la tabla de símbolos, haciendo uso de memoria 
 dinámica y validando la existencia de los nombres*/
-void agregar_registro_constantes(listaConstantes *lista, char* constante_real){
+int agregar_registro_constantes(listaConstantes *lista, char* constante_real){
     if (lista->primerRegistro==NULL)
     {
         tablaConstantes *registro = (tablaConstantes*)malloc(sizeof(tablaConstantes));
@@ -50,6 +50,7 @@ void agregar_registro_constantes(listaConstantes *lista, char* constante_real){
         registro->constante_real=constante_real;
         registro->siguienteRegistro=NULL;
         lista->primerRegistro=registro;
+        return 0;
     }
     else
     {
@@ -67,6 +68,7 @@ void agregar_registro_constantes(listaConstantes *lista, char* constante_real){
         nuevoRegistro->constante_real=constante_real;
         nuevoRegistro->siguienteRegistro=NULL;
         actual->siguienteRegistro=nuevoRegistro;
+        return posicion;
     }
     
 }

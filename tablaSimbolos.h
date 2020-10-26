@@ -80,6 +80,7 @@ void agregar_registro_simbolo(listaSimbolos *lista, char* nombre, int tipo){
             registro->siguienteRegistro=NULL;
             lista->primerRegistro=registro;
             posicion ++;
+            return 0;
         }
         else
         {
@@ -96,6 +97,7 @@ void agregar_registro_simbolo(listaSimbolos *lista, char* nombre, int tipo){
             nuevoRegistro->siguienteRegistro=NULL;
             actual->siguienteRegistro=nuevoRegistro;
             posicion ++;
+            return posicion;
         }
     }
 }
