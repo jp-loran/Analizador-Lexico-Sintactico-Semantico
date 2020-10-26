@@ -33,7 +33,7 @@ void mostrar_tabla_simbolos(FILE *archivo,listaSimbolos lista){
         fprintf(archivo," ____________________\n");
 	    fprintf(archivo,"|Posicion|Nombre|Tipo| \n");        
         while(actual !=0){
-            fprintf(archivo,"  %d \t   %s   %d",actual->pos,actual->nombre,actual->tipo);
+            fprintf(archivo,"  %d \t   %s   %d \n",actual->pos,actual->nombre,actual->tipo);
             actual=actual->siguienteRegistro;
         }
     }
@@ -88,6 +88,7 @@ void agregar_registro_simbolo(listaSimbolos *lista, char* nombre, int tipo){
                 posicion++;
             }
 
+            posicion++;
             tablaSimbolos *nuevoRegistro;
             nuevoRegistro=(tablaSimbolos*)malloc(sizeof(tablaSimbolos));
             nuevoRegistro->pos=posicion;
