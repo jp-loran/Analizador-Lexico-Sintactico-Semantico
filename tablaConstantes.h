@@ -5,6 +5,7 @@
 
 /*La tabla de constantes se manejará como una lista ligada
 cada nodo de la lista es una estructura con los campos requeridos*/
+int posicionConstante = 0; 
 typedef struct tablaConstantes{
     int pos;
     char* constante_real;
@@ -46,30 +47,28 @@ int agregar_registro_constantes(listaConstantes *lista, char* constante_real){
     if (lista->primerRegistro==NULL)
     {
         tablaConstantes *registro = (tablaConstantes*)malloc(sizeof(tablaConstantes));
-        registro->pos=0;
+        registro->pos=posicionConstante;
         registro->constante_real=constante_real;
         registro->siguienteRegistro=NULL;
         lista->primerRegistro=registro;
-        return 0;
+        posicionConstante++;
     }
     else
     {
         tablaConstantes *actual = lista->primerRegistro;
-        int posicion;
         while(actual->siguienteRegistro != 0){
             actual=actual->siguienteRegistro;
-            posicion++;
         }
-
-        posicion++;
         tablaConstantes *nuevoRegistro;
         nuevoRegistro=(tablaConstantes*)malloc(sizeof(tablaConstantes));
-        nuevoRegistro->pos=posicion;
+        nuevoRegistro->pos=posicionConstante;
         nuevoRegistro->constante_real=constante_real;
         nuevoRegistro->siguienteRegistro=NULL;
         actual->siguienteRegistro=nuevoRegistro;
-        return posicion;
+        posicionConstante++;
     }
+    return posicionConstante;
+    
     
 }
 

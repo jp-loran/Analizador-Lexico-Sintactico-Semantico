@@ -1,0 +1,30 @@
+!= es operador relacional
+== es operador relacional
+- es operador aritmetico
+= es un operador de asignacion
+* es operador aritmetico
+/ es operador aritmetico
+% es operador aritmetico
+[ es simbolo especial
+7887 es un numero entero
+] es simbolo especial
+= es un operador de asignacion
+15 es un numero entero
+* es operador aritmetico
+- es operador aritmetico
+20 es un numero entero
+bool es una palabra reservada
+break es una palabra reservada
+case es una palabra reservada
+char es una palabra reservada
+1555 es un numero entero
+0123 es una constante real 
+hola es un identificador
+adios es un identificador
+x1 es un identificador
+x_2 es un identificador
+"hola como estas " es una cadena 
+"$&536445jtdj()" es una cadena 
+3.987E-2 es una constante real 
+0.341e10 es una constante real 
+413.23434 es una constante real 

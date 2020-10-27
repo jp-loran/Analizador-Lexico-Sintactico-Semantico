@@ -22,17 +22,18 @@ struct opRelacional {
 
 //Estructura para definir operadores aritmeticos {simbolo,valor,atomo}
 struct opAritmetico {
+    int indice;
     char simbolo[2];    //Operador 
     char valor[2];        //Valor
-} operadorArit[6] = {{"**","0"},{"+","+"},{"-","-"},{"*","*"},
-                    {"/","/"},{"%","%"}
+} operadorArit[6] = {{0,"**","0"},{1,"+","+"},{2,"-","-"},{3,"*","*"},
+                    {4,"/","/"},{5,"%","%"}
                   };
 
 //Estructura para definir Caracteres Especiales {valor, caracter}
 struct opEspecial {
-    char operador; //Operador
+    char *operador; //Operador
     int valor;        //Valor 
-} caracterEsp[8] = {{'{',123},{'}',125},{',',44},
-                    {':',58},{'(',40},{')',41},
-                    {'[',91} ,{']',93}
+} caracterEsp[8] = {{"{",123},{"}",125},{",",44},
+                    {":",58},{"(",40},{")",41},
+                    {"[",91} ,{"]",93}
                    };

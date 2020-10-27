@@ -69,7 +69,7 @@ int buscar_registro_simbolo(listaSimbolos *lista, char* nombre){
 
 /*Esta función agrega los registros a la tabla de símbolos, haciendo uso de memoria 
 dinámica y validando la existencia de los nombres*/
-void agregar_registro_simbolo(listaSimbolos *lista, char* nombre, int tipo){
+int agregar_registro_simbolo(listaSimbolos *lista, char* nombre, int tipo){
     if(buscar_registro_simbolo(lista,nombre)==-1){
         if (lista->primerRegistro==NULL)
         {
@@ -80,7 +80,7 @@ void agregar_registro_simbolo(listaSimbolos *lista, char* nombre, int tipo){
             registro->siguienteRegistro=NULL;
             lista->primerRegistro=registro;
             posicion ++;
-            return 0;
+            return posicion;
         }
         else
         {

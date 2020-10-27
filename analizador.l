@@ -25,28 +25,89 @@ listaSimbolos tabla_simbolos;
 listaLiterales tabla_literales;
 listaConstantes tabla_constantes_reales;
 listaTokens lista_tokens;
+int valor;
 
 %}
+constan_ente [1-9][0-9]{0,13}
+palabra_res bool|break|case|char|continue|default|do|else|float|for|if|int|return|string|switch|while|void
 identificador [A-Za-z][A-Za-z0-9\_]*
 cadena \"[A-Z|.|a-z|0-9| |!|\[|\]|”|#|$|%|&|/|(|)|=|?|¡|/|*|\-|+|¬|>|<|¿|¬|°|@]*\"
-constante_real [0-9]+[.]?[0-9]+([Ee][\-+]?[0-9]+)?
+constante_real [0-9]+[.]?[0-9]+([E|e][\-+]?[0-9]+)?
+sim_especial \{|\}|,|:|\(|\)|\[|\]
+opera_aritme (\+)|(\*)|(-)|(\/)|(\%)
+asignacion =
+opera_rela (<=)|(>=)|(<)|(!=)|(>)|(==)
 %%
+{asignacion} {
+        fprintf(archSal,"%s es un operador de asignacion\n",yytext);
+	    agregar_token(&lista_tokens,4, 61);
+        }
+
+{constan_ente} {
+        fprintf(archSal,"%s es un numero entero\n",yytext);
+	    agregar_token(&lista_tokens,6, atoi(yytext));
+        }
 {constante_real} {fprintf(archSal, "%s es una constante real \n", yytext);
          char *constante=malloc(sizeof(yytext));
          strcpy(constante,yytext);
          int pos_cons_real=agregar_registro_constantes(&tabla_constantes_reales, constante);
-         agregar_token(&lista_tokens,0, pos_cons_real);}
-{identificador} {fprintf(archSal, "%s es un identificador\n", yytext);
+         agregar_token(&lista_tokens,0, pos_cons_real-1);}
+
+{palabra_res} {
+	    for (valor = 0; valor <= 16; valor++) 
+            {
+               if (strcmp(yytext, palabraRes[valor].palabra) == 0) 
+               {
+                    fprintf(archSal,"%s es una palabra reservada\n",yytext);
+		            agregar_token(&lista_tokens,1, valor);
+               }
+            }
+         }
+{opera_aritme} {
+	    for (valor = 0; valor <= 5; valor++) 
+            {
+               if (strcmp(yytext, operadorArit[valor].simbolo) == 0) 
+               {
+                    fprintf(archSal,"%s es operador aritmetico\n",yytext);
+		            agregar_token(&lista_tokens,8, atoi(operadorArit[valor].valor));
+               }
+            }
+         }
+{opera_rela} {
+	    for (valor = 0; valor <= 5; valor++) 
+            {
+               if (strcmp(yytext, operadorRel[valor].operador) == 0) 
+               {
+                    fprintf(archSal,"%s es operador relacional\n",yytext);
+		            agregar_token(&lista_tokens,5, operadorRel[valor].valor);
+               }
+            }
+         }
+{sim_especial} {
+	    for (valor = 0; valor <= 7; valor++) 
+            {
+               if (strcmp(yytext, caracterEsp[valor].operador) == 0) 
+               {
+                    fprintf(archSal,"%s es simbolo especial\n",yytext);
+		            agregar_token(&lista_tokens,2, caracterEsp[valor].valor);
+               }
+            }
+         }
+{identificador} {
+                fprintf(archSal, "%s es un identificador\n", yytext);
                 char *identificador=malloc(sizeof(yytext));
                 strcpy(identificador,yytext);
                 int pos_ident=agregar_registro_simbolo(&tabla_simbolos, identificador, -1);
-                agregar_token(&lista_tokens,3, pos_ident);}
-{cadena} {fprintf(archSal, "%s es una cadena \n", yytext);
-         char *cadena=malloc(sizeof(yytext));
-         strcpy(cadena,yytext);
-         int pos_cadena=agregar_registro_literales(&tabla_literales, cadena);
-         agregar_token(&lista_tokens,7, pos_cadena);}
+                agregar_token(&lista_tokens,3, pos_ident-1);
+                }
 
+{cadena} {
+        fprintf(archSal, "%s es una cadena \n", yytext);
+        char *cadena=malloc(sizeof(yytext));
+        strcpy(cadena,yytext);
+        int pos_cadena=agregar_registro_literales(&tabla_literales, cadena);
+        agregar_token(&lista_tokens,7, pos_cadena-1);
+        }
 
 %%
 int main(int argc, char *argv[]){

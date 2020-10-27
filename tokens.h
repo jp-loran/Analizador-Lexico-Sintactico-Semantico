@@ -26,6 +26,7 @@ listaTokens crear_lista_tokens(){
 
 /*Función para mostrar los tokens en un archivo*/
 void mostrar_lista_tokens(FILE *archivo, listaTokens lista){
+    fprintf(archivo, "--|Lista de tokens|--\n");
     if (lista.primerToken==NULL){
         fprintf(archivo, "Lista de tokens vacía");
     }
@@ -33,7 +34,7 @@ void mostrar_lista_tokens(FILE *archivo, listaTokens lista){
         Token *actual= lista.primerToken;
         while (actual != 0)
         {
-            fprintf(archivo, "(%d,%d)", actual->clase,actual->posicion);
+            fprintf(archivo, "(%d\t,\t%d)\n", actual->clase,actual->posicion);
             actual=actual->siguienteToken;
         }
          

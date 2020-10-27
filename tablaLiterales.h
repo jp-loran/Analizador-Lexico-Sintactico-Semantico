@@ -5,6 +5,7 @@
 
 /*La tabla de literales se manejará como una lista ligada
 cada nodo de la lista es una estructura con los campos requeridos*/
+int posicionLiteral = 0;
 typedef struct tablaLiterales{
     int pos;
     char* cadena;
@@ -73,11 +74,11 @@ int agregar_registro_literales(listaLiterales *lista, char* cadena){
     if (lista->primerRegistro==NULL)
     {
         tablaLiterales *registro = (tablaLiterales*)malloc(sizeof(tablaLiterales));
-        registro->pos=0;
+        registro->pos=posicionLiteral;
         registro->cadena=cadena;
         registro->siguienteRegistro=NULL;
         lista->primerRegistro=registro;
-        return 0;
+        posicionLiteral++;
     }
     else
     {
@@ -85,18 +86,18 @@ int agregar_registro_literales(listaLiterales *lista, char* cadena){
         int posicion;
         while(actual->siguienteRegistro != 0){
             actual=actual->siguienteRegistro;
-            posicion++;
         }
 
-        posicion++;
         tablaLiterales *nuevoRegistro;
         nuevoRegistro=(tablaLiterales*)malloc(sizeof(tablaLiterales));
-        nuevoRegistro->pos=posicion;
+        nuevoRegistro->pos=posicionLiteral;
         nuevoRegistro->cadena=cadena;
         nuevoRegistro->siguienteRegistro=NULL;
         actual->siguienteRegistro=nuevoRegistro;
-        return posicion;
+        posicionLiteral++;
     }
+    return posicionLiteral;
+    
     
 }
 
