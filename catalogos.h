@@ -1,7 +1,5 @@
 //En este archivo se definen las estructuras de los catalogos a utilizar
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 //Estructura para definir Palabras reservadas {valor palabra}
 struct palabraS{
     char palabra[10]; //Palabra
@@ -20,16 +18,16 @@ struct opRelacional {
     int valor;        //Valor
 } operadorRel[6] = {{"!=",0},{"==",1},{">",2},{"<",3},{">=",4},{"<=",5}};
 
-//Estructura para definir operadores aritmeticos {simbolo,valor,atomo}
+//Estructura para definir operadores aritmeticos {indice,simbolo,valor}
 struct opAritmetico {
     int indice;
     char simbolo[2];    //Operador 
     char valor[2];        //Valor
-} operadorArit[6] = {{0,"**","0"},{1,"+","+"},{2,"-","-"},{3,"*","*"},
-                    {4,"/","/"},{5,"%","%"}
+} operadorArit[5] = {{0,"+","+"},{1,"-","-"},{2,"*","*"},
+                    {3,"/","/"},{4,"%","%"}
                   };
 
-//Estructura para definir Caracteres Especiales {valor, caracter}
+//Estructura para definir Caracteres Especiales {operador valor}
 struct opEspecial {
     char *operador; //Operador
     int valor;        //Valor 

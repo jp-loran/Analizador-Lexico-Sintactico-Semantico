@@ -9,8 +9,7 @@ Fecha de entrega: 29 de Octubre de 2020
 */
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
 #include "tablaSimbolos.h"
 #include "tokens.h"
 #include "catalogos.h"
@@ -20,6 +19,7 @@ Fecha de entrega: 29 de Octubre de 2020
 FILE *archSal;
 FILE *archTablas;
 FILE *archTokens;
+FILE *archError;
 
 listaSimbolos tabla_simbolos;
 listaLiterales tabla_literales;
@@ -40,47 +40,50 @@ potencia \*\*
 asignacion =
 opera_rela (<=)|(>=)|(<)|(!=)|(>)|(==)
 comentario @[\"A-Z|.|a-z|0-9| |!|\[|\]|”|#|$|%|&|/|(|)|=|?|¡|/|*|\-|+|¬|>|<|¿|¬|°|@\"]*
+error [^constan_entepalabra_residentificadorconstante_realsim_especialopera_aritmepotenciaasignacionopera_relacomentario \n]
 %%
 {comentario} {
-            fprintf(archSal,"%s es un comentario, por lo tanto se descarta\n",yytext);
+            fprintf(archSal,"%s Es un comentario, por lo tanto se descarta\n",yytext);
             }
 {asignacion} {
-        fprintf(archSal,"%s es un operador de asignacion\n",yytext);
+        fprintf(archSal,"%s Es un operador de asignacion\n",yytext);
         int ascii_asignacion= obtenerASCII(yytext);
 	    agregar_token(&lista_tokens,4, ascii_asignacion);
         }
 
 {constan_ente} {
-        fprintf(archSal,"%s es un numero entero\n",yytext);
+        fprintf(archSal,"%s Es un numero entero\n",yytext);
 	    agregar_token(&lista_tokens,6, atoi(yytext));
         }
-{constante_real} {fprintf(archSal, "%s es una constante real \n", yytext);
+{constante_real} {
+         fprintf(archSal, "%s Es una constante real \n", yytext);
          char *constante=malloc(sizeof(yytext));
          strcpy(constante,yytext);
          int pos_cons_real=agregar_registro_constantes(&tabla_constantes_reales, constante);
-         agregar_token(&lista_tokens,0, pos_cons_real-1);}
+         agregar_token(&lista_tokens,0, pos_cons_real-1);
+      }
 
 {palabra_res} {
 	    for (valor = 0; valor <= 16; valor++) 
             {
                if (strcmp(yytext, palabraRes[valor].palabra) == 0) 
                {
-                    fprintf(archSal,"%s es una palabra reservada\n",yytext);
+                    fprintf(archSal,"%s Es una palabra reservada\n",yytext);
 		            agregar_token(&lista_tokens,1, valor);
                }
             }
          }
 {potencia} {
-         fprintf(archSal,"%s es operador aritmetico\n",yytext);
+         fprintf(archSal,"%s Es operador aritmetico\n",yytext);
 		   agregar_token(&lista_tokens,8,0);
          }         
 {opera_aritme} {
-	    for (valor = 0; valor <= 5; valor++) 
+	    for (valor = 0; valor <= 4; valor++) 
             {
                if (strcmp(yytext, operadorArit[valor].simbolo) == 0) 
                {
                   int ascii_aritmetico= obtenerASCII(yytext);
-                  fprintf(archSal,"%s es operador aritmetico\n",yytext);
+                  fprintf(archSal,"%s Es operador aritmetico\n",yytext);
 		            agregar_token(&lista_tokens,8, ascii_aritmetico);
                }
             }
@@ -90,7 +93,7 @@ comentario @[\"A-Z|.|a-z|0-9| |!|\[|\]|”|#|$|%|&|/|(|)|=|?|¡|/|*|\-|+|¬|>|<|
             {
                if (strcmp(yytext, operadorRel[valor].operador) == 0) 
                {
-                    fprintf(archSal,"%s es operador relacional\n",yytext);
+                    fprintf(archSal,"%s Es operador relacional\n",yytext);
 		            agregar_token(&lista_tokens,5, operadorRel[valor].valor);
                }
             }
@@ -101,13 +104,13 @@ comentario @[\"A-Z|.|a-z|0-9| |!|\[|\]|”|#|$|%|&|/|(|)|=|?|¡|/|*|\-|+|¬|>|<|
                if (strcmp(yytext, caracterEsp[valor].operador) == 0) 
                {
                   int ascii_especial= obtenerASCII(yytext);
-                    fprintf(archSal,"%s es simbolo especial\n",yytext);
+                    fprintf(archSal,"%s Es simbolo especial\n",yytext);
 		            agregar_token(&lista_tokens,2, ascii_especial);
                }
             }
          }
 {identificador} {
-                fprintf(archSal, "%s es un identificador\n", yytext);
+                fprintf(archSal, "%s Es un identificador\n", yytext);
                 char *identificador=malloc(sizeof(yytext));
                 strcpy(identificador,yytext);
                 int pos_ident=agregar_registro_simbolo(&tabla_simbolos, identificador, -1);
@@ -115,12 +118,13 @@ comentario @[\"A-Z|.|a-z|0-9| |!|\[|\]|”|#|$|%|&|/|(|)|=|?|¡|/|*|\-|+|¬|>|<|
                 }
 
 {cadena} {
-        fprintf(archSal, "%s es una cadena \n", yytext);
+        fprintf(archSal, "%s Es una cadena \n", yytext);
         char *cadena=malloc(sizeof(yytext));
         strcpy(cadena,yytext);
         int pos_cadena=agregar_registro_literales(&tabla_literales, cadena);
         agregar_token(&lista_tokens,7, pos_cadena-1);
         }
+{error}  fprintf(archError,"%s Es un Error\n",yytext);
 
 %%
 int main(int argc, char *argv[]){
@@ -129,6 +133,8 @@ int main(int argc, char *argv[]){
     archSal = fopen("salida.txt","w");
     archTablas=fopen("tablas.txt","w");
     archTokens=fopen("tokens.txt","w");
+    archError = fopen("error.txt","w");
+    fprintf(archError,"--|LISTA DE ERRORES|--\n");
 
     tabla_simbolos=crear_tabla_simbolos();
     tabla_literales=crear_tabla_literales();
@@ -145,10 +151,10 @@ int main(int argc, char *argv[]){
     fclose(archTablas);
     fclose(archSal);
     fclose(archTokens);
+    fclose(archError);
 
     return 0;
 }
-
 
 int obtenerASCII(char *caracter){
     return (int)*caracter;

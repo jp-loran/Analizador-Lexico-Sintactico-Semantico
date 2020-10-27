@@ -1,7 +1,6 @@
 /*En este archivo se encuentran las funciones relacionadas a la creación de los tokens*/
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
 
 /*Los tokens se tratarán de la misma forma que la tabla de símbolos, es decir,
 mediante una lista ligada donde cada nodo es una estructura con los datos del token*/
@@ -32,7 +31,6 @@ void mostrar_lista_tokens(FILE *archivo, listaTokens lista){
     }
     else{
         Token *actual= lista.primerToken;
-        
         while (actual != 0)
         {
             if (actual->clase==2|actual->clase==4|(actual->clase==8 && actual->posicion!=0))
@@ -43,8 +41,7 @@ void mostrar_lista_tokens(FILE *archivo, listaTokens lista){
             fprintf(archivo, "(%d\t,\t%d)\n", actual->clase,actual->posicion);            
             }
             actual=actual->siguienteToken;
-        }
-         
+        }  
     }
 }
 
@@ -70,10 +67,7 @@ void agregar_token(listaTokens *lista, int clase, int posicion){
         nuevoToken->posicion=posicion;
         nuevoToken->siguienteToken=NULL;
         actual->siguienteToken=nuevoToken;
-    }
-    
+    }   
 }
 
     
-
-
