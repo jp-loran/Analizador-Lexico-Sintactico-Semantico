@@ -1,0 +1,21 @@
+ TABLA DE SIMBOLOS
+ _________________________________________
+|Posicion|     Nombre      |     Tipo    | 
+ -----------------------------------------
+	0 		main		-1 
+	1 		identificador_1		-1 
+	2 		printf		-1 
+
+
+ TABLA DE CADENAS
+ _____________________________________
+|Posicion|         Cadena            |  
+--------------------------------------  
+  0 	   "hola como estas" 
+
+
+ TABLA DE CONSTANTES
+ ________________________________
+|Posicion|       Constante      | 
+---------------------------------
+  0 		   1.345E-3 

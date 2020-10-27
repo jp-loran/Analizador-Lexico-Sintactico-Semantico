@@ -1,15 +1,6 @@
-!=
-==
-- = * / %
-[ 7887 ] = 15 * - 20
-bool  break case char 1555 
-0123
-hola 
-adios
-x1
-x_2
-"hola como estas "
-"$&536445jtdj()" 
-3.987E-2
-0.341e10
-413.23434
+@ programa de prueba
+int main(){
+    float identificador_1 = 1.345E-3;
+    identificador_1 = identificador_1**3:
+    printf("hola como estas"):
+}

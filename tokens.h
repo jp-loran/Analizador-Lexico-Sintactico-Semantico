@@ -32,9 +32,16 @@ void mostrar_lista_tokens(FILE *archivo, listaTokens lista){
     }
     else{
         Token *actual= lista.primerToken;
+        
         while (actual != 0)
         {
-            fprintf(archivo, "(%d\t,\t%d)\n", actual->clase,actual->posicion);
+            if (actual->clase==2|actual->clase==4|(actual->clase==8 && actual->posicion!=0))
+            {
+            fprintf(archivo, "(%d\t,\t%c)\n", actual->clase,(char)actual->posicion);            
+            }
+            else{
+            fprintf(archivo, "(%d\t,\t%d)\n", actual->clase,actual->posicion);            
+            }
             actual=actual->siguienteToken;
         }
          
@@ -67,5 +74,6 @@ void agregar_token(listaTokens *lista, int clase, int posicion){
     
 }
 
+    
 
 

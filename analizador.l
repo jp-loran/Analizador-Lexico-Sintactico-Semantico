@@ -26,6 +26,7 @@ listaLiterales tabla_literales;
 listaConstantes tabla_constantes_reales;
 listaTokens lista_tokens;
 int valor;
+int obtenerASCII(char *caracter);
 
 %}
 constan_ente [1-9][0-9]{0,13}
@@ -35,12 +36,18 @@ cadena \"[A-Z|.|a-z|0-9| |!|\[|\]|”|#|$|%|&|/|(|)|=|?|¡|/|*|\-|+|¬|>|<|¿|¬
 constante_real [0-9]+[.]?[0-9]+([E|e][\-+]?[0-9]+)?
 sim_especial \{|\}|,|:|\(|\)|\[|\]
 opera_aritme (\+)|(\*)|(-)|(\/)|(\%)
+potencia \*\*
 asignacion =
 opera_rela (<=)|(>=)|(<)|(!=)|(>)|(==)
+comentario @[\"A-Z|.|a-z|0-9| |!|\[|\]|”|#|$|%|&|/|(|)|=|?|¡|/|*|\-|+|¬|>|<|¿|¬|°|@\"]*
 %%
+{comentario} {
+            fprintf(archSal,"%s es un comentario, por lo tanto se descarta\n",yytext);
+            }
 {asignacion} {
         fprintf(archSal,"%s es un operador de asignacion\n",yytext);
-	    agregar_token(&lista_tokens,4, 61);
+        int ascii_asignacion= obtenerASCII(yytext);
+	    agregar_token(&lista_tokens,4, ascii_asignacion);
         }
 
 {constan_ente} {
@@ -63,13 +70,18 @@ opera_rela (<=)|(>=)|(<)|(!=)|(>)|(==)
                }
             }
          }
+{potencia} {
+         fprintf(archSal,"%s es operador aritmetico\n",yytext);
+		   agregar_token(&lista_tokens,8,0);
+         }         
 {opera_aritme} {
 	    for (valor = 0; valor <= 5; valor++) 
             {
                if (strcmp(yytext, operadorArit[valor].simbolo) == 0) 
                {
-                    fprintf(archSal,"%s es operador aritmetico\n",yytext);
-		            agregar_token(&lista_tokens,8, atoi(operadorArit[valor].valor));
+                  int ascii_aritmetico= obtenerASCII(yytext);
+                  fprintf(archSal,"%s es operador aritmetico\n",yytext);
+		            agregar_token(&lista_tokens,8, ascii_aritmetico);
                }
             }
          }
@@ -88,8 +100,9 @@ opera_rela (<=)|(>=)|(<)|(!=)|(>)|(==)
             {
                if (strcmp(yytext, caracterEsp[valor].operador) == 0) 
                {
+                  int ascii_especial= obtenerASCII(yytext);
                     fprintf(archSal,"%s es simbolo especial\n",yytext);
-		            agregar_token(&lista_tokens,2, caracterEsp[valor].valor);
+		            agregar_token(&lista_tokens,2, ascii_especial);
                }
             }
          }
@@ -134,4 +147,9 @@ int main(int argc, char *argv[]){
     fclose(archTokens);
 
     return 0;
+}
+
+
+int obtenerASCII(char *caracter){
+    return (int)*caracter;
 }

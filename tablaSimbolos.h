@@ -32,11 +32,11 @@ void mostrar_tabla_simbolos(FILE *archivo,listaSimbolos lista){
     else{
         tablaSimbolos *actual=lista.primerRegistro;
         fprintf(archivo," TABLA DE SIMBOLOS\n");
-        fprintf(archivo," ____________________\n");
-	    fprintf(archivo,"|Posicion|Nombre|Tipo| \n");
-        fprintf(archivo," ---------------------\n");
+        fprintf(archivo," _________________________________________\n");
+	    fprintf(archivo,"|Posicion|     Nombre      |     Tipo    | \n");
+        fprintf(archivo," -----------------------------------------\n");
         while(actual !=0){
-            fprintf(archivo,"\t%d \t\t\t%s\t\t%d \n",actual->pos,actual->nombre,actual->tipo);
+            fprintf(archivo,"\t%d \t\t%s\t\t%d \n",actual->pos,actual->nombre,actual->tipo);
             actual=actual->siguienteRegistro;
         }
     }

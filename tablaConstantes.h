@@ -67,8 +67,6 @@ int agregar_registro_constantes(listaConstantes *lista, char* constante_real){
         actual->siguienteRegistro=nuevoRegistro;
         posicionConstante++;
     }
-    return posicionConstante;
-    
-    
+    return posicionConstante;    
 }
 
