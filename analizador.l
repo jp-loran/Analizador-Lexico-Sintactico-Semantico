@@ -7,27 +7,371 @@ Descripción: Este programa reconoce las clases de componentes léxicos definido
 Fecha de elaboración: 25 de Octubre de 2020
 Fecha de entrega: 29 de Octubre de 2020
 */
+FILE *archSal, *archTablas, *archTokens, *archError;
 
-#include <stdio.h>
+int valor;
+int obtenerASCII(char *caracter);
 
-#include "tablaSimbolos.h"
-#include "tokens.h"
-#include "catalogos.h"
-#include "tablaLiterales.h"
-#include "tablaConstantes.h"
+//Estructura para definir Palabras reservadas {valor palabra}
+struct palabraS{
+    char palabra[10]; //Palabra
+    int valor;        //Valor 
+} palabraRes[17] = {
+                    {"bool",0},{"break",1},{"case",2},{"char",3},
+                    {"continue",4},{"default",5},{"do",6},{"else",7},
+                    {"float",8},{"for",9},{"if",10},{"int",11},
+                    {"return",12},{"string",13},{"switch",14},{"while",15},
+                    {"void",16}
+                   };
+				   
+//Estructura para definir Operadores relacionales {valor,operador}
+struct opRelacional {
+    char operador[2]; //Operador 
+    int valor;        //Valor
+} operadorRel[6] = {{"!=",0},{"==",1},{">",2},{"<",3},{">=",4},{"<=",5}};
 
-FILE *archSal;
-FILE *archTablas;
-FILE *archTokens;
-FILE *archError;
+//Estructura para definir operadores aritmeticos {indice,simbolo,valor}
+struct opAritmetico {
+    int indice;
+    char simbolo[2];    //Operador 
+    char valor[2];        //Valor
+} operadorArit[5] = {{0,"+","+"},{1,"-","-"},{2,"*","*"},
+                    {3,"/","/"},{4,"%","%"}
+                  };
+
+//Estructura para definir Caracteres Especiales {operador valor}
+struct opEspecial {
+    char *operador; //Operador
+    int valor;        //Valor 
+} caracterEsp[8] = {{"{",123},{"}",125},{",",44},
+                    {":",58},{"(",40},{")",41},
+                    {"[",91} ,{"]",93}
+                   };
+
+
+/*La tabla se símbolos se manejará como una lista ligada
+cada nodo de la lista es una estructura con los campos requeridos*/
+int posicion=0;
+typedef struct tablaSimbolos{
+    int pos;
+    char* nombre;
+    int tipo;
+    struct tablaSimbolos* siguienteRegistro;
+}tablaSimbolos;
+
+typedef struct{
+    struct tablaSimbolos* primerRegistro;
+}listaSimbolos;
+
+/*Con esta función inicializamos nuestra tabla de símbolos*/
+listaSimbolos crear_tabla_simbolos(){
+    listaSimbolos lista;
+    lista.primerRegistro=NULL;
+    return lista;
+}
+
+/*Esta función nos permite mostrar el contenido de nuestra lista ligada o tabla de símbolos
+ dentro del archivo de salida que se le pase como parámetro*/
+void mostrar_tabla_simbolos(FILE *archivo,listaSimbolos lista){
+    if(lista.primerRegistro==NULL)
+        fprintf(archivo,"Tabla de simbolos vacia");
+    else{
+        tablaSimbolos *actual=lista.primerRegistro;
+        fprintf(archivo," TABLA DE SIMBOLOS\n");
+        fprintf(archivo," _________________________________________\n");
+	    fprintf(archivo,"|Posicion|     Nombre      |     Tipo    | \n");
+        fprintf(archivo," -----------------------------------------\n");
+        while(actual !=0){
+            fprintf(archivo,"\t%d \t\t%s\t\t%d \n",actual->pos,actual->nombre,actual->tipo);
+            actual=actual->siguienteRegistro;
+        }
+    }
+}
+
+/*Esta función permite buscar un registro por su nombre
+Devuelve un -1 cuando la lista se encuentra vacía o cuando no hay coincidencia
+De lo contrario devuelve un 0*/
+int buscar_registro_simbolo(listaSimbolos *lista, char* nombre){
+    if(lista->primerRegistro==NULL){
+        return -1;
+    }
+    else
+    {
+        tablaSimbolos *actual = lista->primerRegistro;
+        if(!strcmp(actual->nombre, nombre)){
+            return 0;
+        }
+        while (actual->siguienteRegistro != 0)
+        {
+            actual=actual->siguienteRegistro;
+            if(!strcmp(actual->nombre, nombre)){
+            return posicion;
+            }
+        }
+        return -1;
+    }
+    
+}
+
+/*Esta función agrega los registros a la tabla de símbolos, haciendo uso de memoria 
+dinámica y validando la existencia de los nombres*/
+int agregar_registro_simbolo(listaSimbolos *lista, char* nombre, int tipo){
+    if(buscar_registro_simbolo(lista,nombre)==-1){
+        if (lista->primerRegistro==NULL)
+        {
+            tablaSimbolos *registro = (tablaSimbolos*)malloc(sizeof(tablaSimbolos));
+            registro->pos=posicion;
+            registro->nombre=nombre;
+            registro->tipo=tipo;
+            registro->siguienteRegistro=NULL;
+            lista->primerRegistro=registro;
+            posicion ++;
+            return posicion;
+        }
+        else
+        {
+            tablaSimbolos *actual = lista->primerRegistro;
+            while(actual->siguienteRegistro != 0){
+                actual=actual->siguienteRegistro;
+                
+            }
+            tablaSimbolos *nuevoRegistro;
+            nuevoRegistro=(tablaSimbolos*)malloc(sizeof(tablaSimbolos));
+            nuevoRegistro->pos=posicion;
+            nuevoRegistro->nombre=nombre;
+            nuevoRegistro->tipo=tipo;
+            nuevoRegistro->siguienteRegistro=NULL;
+            actual->siguienteRegistro=nuevoRegistro;
+            posicion ++;
+            return posicion;
+        }
+    }
+}
+
+listaSimbolos crear_tabla_simbolos();
+void mostrar_tabla_simbolos(FILE *archivo,listaSimbolos lista);
+int buscar_registro_simbolo(listaSimbolos *lista, char* nombre);
+int agregar_registro_simbolo(listaSimbolos *lista, char* nombre, int tipo);
+
+/*La tabla de literales se manejará como una lista ligada
+cada nodo de la lista es una estructura con los campos requeridos*/
+int posicionLiteral = 0;
+typedef struct tablaLiterales{
+    int pos;
+    char* cadena;
+    struct tablaLiterales* siguienteRegistro;
+}tablaLiterales;
+
+typedef struct{
+    struct tablaLiterales* primerRegistro;
+}listaLiterales;
+
+/*Con esta función inicializamos nuestra tabla de símbolos*/
+listaLiterales crear_tabla_literales(){
+    listaLiterales lista;
+    lista.primerRegistro=NULL;
+    return lista;
+}
+
+/*Esta función nos permite mostrar el contenido de nuestra lista ligada o tabla de literales
+ dentro del archivo de salida que se le pase como parámetro*/
+void mostrar_tabla_literales(FILE *archivo,listaLiterales lista){
+    if(lista.primerRegistro==NULL)
+        fprintf(archivo,"Tabla de literales vacia");
+    else{
+        tablaLiterales *actual=lista.primerRegistro;
+        fprintf(archivo," TABLA DE CADENAS\n");
+        fprintf(archivo," _____________________________________\n");
+	    fprintf(archivo,"|Posicion|         Cadena            |  \n");
+        fprintf(archivo,"--------------------------------------  \n");     
+        while(actual !=0){
+            fprintf(archivo,"  %d \t   %s \n",actual->pos,actual->cadena);
+            actual=actual->siguienteRegistro;
+        }
+    }
+}
+
+/*Esta función agrega los registros a la tabla de símbolos, haciendo uso de memoria 
+dinámica y validando la existencia de los nombres*/
+int agregar_registro_literales(listaLiterales *lista, char* cadena){
+    if (lista->primerRegistro==NULL)
+    {
+        tablaLiterales *registro = (tablaLiterales*)malloc(sizeof(tablaLiterales));
+        registro->pos=posicionLiteral;
+        registro->cadena=cadena;
+        registro->siguienteRegistro=NULL;
+        lista->primerRegistro=registro;
+        posicionLiteral++;
+    }
+    else
+    {
+        tablaLiterales *actual = lista->primerRegistro;
+        int posicion;
+        while(actual->siguienteRegistro != 0){
+            actual=actual->siguienteRegistro;
+        }
+        tablaLiterales *nuevoRegistro;
+        nuevoRegistro=(tablaLiterales*)malloc(sizeof(tablaLiterales));
+        nuevoRegistro->pos=posicionLiteral;
+        nuevoRegistro->cadena=cadena;
+        nuevoRegistro->siguienteRegistro=NULL;
+        actual->siguienteRegistro=nuevoRegistro;
+        posicionLiteral++;
+    }
+    return posicionLiteral; 
+}
+//Funciones a usar en la tabla de literales
+listaLiterales crear_tabla_literales();
+void mostrar_tabla_literales(FILE *archivo,listaLiterales lista);
+int agregar_registro_literales(listaLiterales *lista, char* cadena);
+
+/*La tabla de constantes se manejará como una lista ligada
+cada nodo de la lista es una estructura con los campos requeridos*/
+int posicionConstante = 0; 
+typedef struct tablaConstantes{
+    int pos;
+    char* constante_real;
+    struct tablaConstantes* siguienteRegistro;
+}tablaConstantes;
+
+typedef struct{
+    struct tablaConstantes* primerRegistro;
+}listaConstantes;
+
+/*Con esta función inicializamos nuestra tabla de constantes*/
+listaConstantes crear_tabla_constantes(){
+    listaConstantes lista;
+    lista.primerRegistro=NULL;
+    return lista;
+}
+
+/*Esta función nos permite mostrar el contenido de nuestra lista ligada o tabla de constantes
+ dentro del archivo de salida que se le pase como parámetro*/
+void mostrar_tabla_constantes(FILE *archivo,listaConstantes lista){
+    if(lista.primerRegistro==NULL)
+        fprintf(archivo,"Tabla de constantes vacia");
+    else{
+        tablaConstantes *actual=lista.primerRegistro;
+        fprintf(archivo," TABLA DE CONSTANTES\n");
+        fprintf(archivo," ________________________________\n");
+	    fprintf(archivo,"|Posicion|       Constante      | \n");
+        fprintf(archivo,"---------------------------------\n");        
+        while(actual !=0){
+            fprintf(archivo,"  %d \t\t   %s \n",actual->pos,actual->constante_real);
+            actual=actual->siguienteRegistro;
+        }
+    }
+}
+
+/*Esta función agrega los registros a la tabla de símbolos, haciendo uso de memoria 
+dinámica y validando la existencia de los nombres*/
+int agregar_registro_constantes(listaConstantes *lista, char* constante_real){
+    if (lista->primerRegistro==NULL)
+    {
+        tablaConstantes *registro = (tablaConstantes*)malloc(sizeof(tablaConstantes));
+        registro->pos=posicionConstante;
+        registro->constante_real=constante_real;
+        registro->siguienteRegistro=NULL;
+        lista->primerRegistro=registro;
+        posicionConstante++;
+    }
+    else
+    {
+        tablaConstantes *actual = lista->primerRegistro;
+        while(actual->siguienteRegistro != 0){
+            actual=actual->siguienteRegistro;
+        }
+        tablaConstantes *nuevoRegistro;
+        nuevoRegistro=(tablaConstantes*)malloc(sizeof(tablaConstantes));
+        nuevoRegistro->pos=posicionConstante;
+        nuevoRegistro->constante_real=constante_real;
+        nuevoRegistro->siguienteRegistro=NULL;
+        actual->siguienteRegistro=nuevoRegistro;
+        posicionConstante++;
+    }
+    return posicionConstante;    
+}
+//Definicion de las funciones a usar
+listaConstantes crear_tabla_constantes();
+void mostrar_tabla_constantes(FILE *archivo,listaConstantes lista);
+int agregar_registro_constantes(listaConstantes *lista, char* constante_real);
+
+/*Los tokens se tratarán de la misma forma que la tabla de símbolos, es decir,
+mediante una lista ligada donde cada nodo es una estructura con los datos del token*/
+typedef struct Token
+{
+    int clase;
+    int posicion;
+    struct Token* siguienteToken;
+}Token;
+
+typedef struct 
+{
+    struct Token* primerToken;
+}listaTokens;
+
+/*Función para incializar la lista*/
+listaTokens crear_lista_tokens(){
+    listaTokens lista;
+    lista.primerToken=NULL;
+    return lista;
+}
+
+/*Función para mostrar los tokens en un archivo*/
+void mostrar_lista_tokens(FILE *archivo, listaTokens lista){
+    fprintf(archivo, "--|Lista de tokens|--\n");
+    if (lista.primerToken==NULL){
+        fprintf(archivo, "Lista de tokens vacía");
+    }
+    else{
+        Token *actual= lista.primerToken;
+        while (actual != 0)
+        {
+            if (actual->clase==2|actual->clase==4|(actual->clase==8 && actual->posicion!=0))
+            {
+            fprintf(archivo, "(%d\t,\t%c)\n", actual->clase,(char)actual->posicion);            
+            }
+            else{
+            fprintf(archivo, "(%d\t,\t%d)\n", actual->clase,actual->posicion);            
+            }
+            actual=actual->siguienteToken;
+        }  
+    }
+}
+
+/*Funcion que nos permite agregar tokens a la lista usando memoria dinámica*/
+void agregar_token(listaTokens *lista, int clase, int posicion){
+    if (lista->primerToken==NULL){
+        Token *token = (Token*)malloc(sizeof(Token));
+        token->clase=clase;
+        token->posicion=posicion;
+        token->siguienteToken=NULL;
+        lista->primerToken=token; 
+    }    
+    else
+    {
+        Token *actual= lista->primerToken;
+        while (actual->siguienteToken!=0)
+        {
+            actual=actual->siguienteToken;
+        }
+        Token *nuevoToken;
+        nuevoToken = (Token*)malloc(sizeof(Token));
+        nuevoToken->clase=clase;
+        nuevoToken->posicion=posicion;
+        nuevoToken->siguienteToken=NULL;
+        actual->siguienteToken=nuevoToken;
+    }   
+}
+
+listaTokens crear_lista_tokens();
+void mostrar_lista_tokens(FILE *archivo, listaTokens lista);
+void agregar_token(listaTokens *lista, int clase, int posicion);
 
 listaSimbolos tabla_simbolos;
 listaLiterales tabla_literales;
 listaConstantes tabla_constantes_reales;
 listaTokens lista_tokens;
-int valor;
-int obtenerASCII(char *caracter);
-
 %}
 constan_ente [1-9][0-9]{0,13}
 palabra_res bool|break|case|char|continue|default|do|else|float|for|if|int|return|string|switch|while|void
@@ -125,7 +469,6 @@ error [^constan_entepalabra_residentificadorconstante_realsim_especialopera_arit
         agregar_token(&lista_tokens,7, pos_cadena-1);
         }
 {error}  fprintf(archError,"%s Es un Error\n",yytext);
-
 %%
 int main(int argc, char *argv[]){
     
@@ -138,7 +481,6 @@ int main(int argc, char *argv[]){
 
     tabla_simbolos=crear_tabla_simbolos();
     tabla_literales=crear_tabla_literales();
-
     yylex();
 
     mostrar_tabla_simbolos(archTablas,tabla_simbolos);
@@ -152,7 +494,6 @@ int main(int argc, char *argv[]){
     fclose(archSal);
     fclose(archTokens);
     fclose(archError);
-
     return 0;
 }
 
