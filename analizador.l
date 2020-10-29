@@ -6,6 +6,10 @@ Descripción: Este programa reconoce las clases de componentes léxicos definido
              Los resultados se almacenan en distintos archivos de salida.
 Fecha de elaboración: 25 de Octubre de 2020
 Fecha de entrega: 29 de Octubre de 2020
+Instrucciones de ejecucion
+        $flex analizador.l
+        $gcc lex.yy.c -lfl
+        $./a.out nombre_archivo.txt  
 */
 FILE *archSal, *archTablas, *archTokens, *archError;
 
