@@ -1,5 +1,6 @@
 @ programa de prueba
 int main(){
+    int algo:
     float identificador_1 = 1.345E-3;
     identificador_1 = identificador_1**3:
     printf("hola como estas"):
