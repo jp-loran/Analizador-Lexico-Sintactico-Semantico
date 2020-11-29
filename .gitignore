@@ -4,3 +4,4 @@ lex.yy.c
 salida.txt
 tablas.txt
 tokens.txt
+atomos.txt

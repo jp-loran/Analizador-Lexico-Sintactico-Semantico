@@ -8,6 +8,7 @@ typedef struct Token
 {
     int clase;
     int posicion;
+    char atomo;
     struct Token* siguienteToken;
 }Token;
 
@@ -70,4 +71,21 @@ void agregar_token(listaTokens *lista, int clase, int posicion){
     }   
 }
 
-    
+char atomo(int clase, float posicion){
+    int valor_int=(int)valor;
+    switch(clase){
+        case 0:
+            return 'r';
+            break;
+        case 1:
+        case 2:
+        case 3:
+            return 'a';
+            break;
+        case 4:
+            return '=';
+            break;
+        case 5:
+        case 6
+    }
+}
