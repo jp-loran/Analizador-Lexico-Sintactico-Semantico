@@ -273,6 +273,13 @@ void U(){
             c=getchar();
         }else{ error();}
         return;
+    }else{ error();}
+}
+
+void W(){
+    if (c=='w')
+    {
+        /* code */
     }
     
 }
