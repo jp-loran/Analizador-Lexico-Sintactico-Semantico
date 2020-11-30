@@ -98,13 +98,183 @@ void DP(){
     {
         D();
         DP();
+        return;
     }else if (c==']' || c=='}')
     {
         return;
+    }else
+    {
+        error();
+    }
+}
+
+void D(){
+    if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g')
+    {
+        V();
+        L();
+        if (c==':')
+        {
+            c=getchar();
+        }else
+        {
+            error();
+        }
+        return;
+    }else
+    {
+        error();
     }
     
+}
     
+void L(){
+    if (c=='a')
+    {
+        c=getchar();
+        G();
+        C();
+        return;
+    }else
+    {
+        error();
+    }
+}
+void C(){
+    if (c==',')
+    {
+        c=getchar();
+        L();
+        return;
+    }else if(c==':')
+    {
+        return;   
+    }else
+    {
+        error();
+    }
+}
+void V(){
+    if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g')
+    {
+        c=getchar();
+        return;
+    }else
+    {
+        error();
+    }
+}
+void G(){
+    if (c=='[')
+    {
+        c=getchar();
+        if (c=='e')
+        {
+            c=getchar();
+            if (c==']')
+            {
+                c=getchar();
+                return;
+            }
+            
+        } 
+    }
+    else
+    {
+        error();
+    }
+}
+void S(){
+    if (/*PRODUCCION A*/)
+    {
+        /* code */
+    }else if(c=='x'){
+        X();
+        return;
+    }else if (c=='i')
+    {
+        I();
+        return
+    }else if (c=='w')
+    {
+        W();
+        return;
+    }else if (c=='h')
+    {
+        H();
+        return;
+    }else if (c=='p')
+    {
+        N();
+        return;
+    }else if (c=='u')
+    {
+        c=getchar();
+        U();
+        if (c==':')
+        {
+            c=getchar();
+            return;
+        }else
+        {
+            error();
+        }
+    }else if(c=='t'){
+        c=getchar();
+        if (c==':')
+        {
+            c=getchar();
+            return;
+        }else
+        {
+            error();
+        }
+    }else if (c=='[')
+    {
+        c=getchar();
+        if (c=='a')
+        {
+            c=getchar();
+            if (c=='(')
+            {
+                c=getchar();
+                if (c==')')
+                {
+                    c=getchar();
+                    if (c==']')
+                    {
+                        c==getchar();
+                        if (c==':')
+                        {
+                            c=getchar();
+                            return;
+                        }else{error();}
+                        
+                    }else{error();}
+                    
+                }else{error();}
+                
+            }else{error();}
+            
+        }else{error();}
+        
+    }else{error();}
+}   
 
+void U(){
+    if (c==':')
+    {
+        return;
+    }else if(c=='('){
+        c=getchar();
+        F();
+        if (c==')')
+        {
+            c=getchar();
+        }else{ error();}
+        return;
+    }
+    
 }
 
 void B(){
