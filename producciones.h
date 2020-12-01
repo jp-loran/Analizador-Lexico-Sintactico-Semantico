@@ -293,3 +293,29 @@ void S(){
     }
     
 } */
+
+void J(){
+    if (c=='l'){
+        c=leeSiguiente();
+        if (c=='{'){
+            B();
+            if (c=='}'){
+                return;
+            }
+            else{
+                printf("Algo esta mal en L \n");
+            }
+            
+        }
+        else{
+            printf("Algo esta mal en L \n");
+        } 
+    }
+    else if (c==':'){
+        return;
+    }else{
+        printf("Algo esta mal en L \n");
+    }
+    
+
+}
