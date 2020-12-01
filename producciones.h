@@ -20,6 +20,7 @@ void YP();
 void VP();
 void B();
 void S();
+void J();
 
 char crearArray(FILE* archAtomos){
     if(archAtomos!= NULL){
@@ -318,4 +319,38 @@ void J(){
     }
     
 
+}
+
+void N(){
+    if (c=='p'){
+        c=leeSiguiente();
+        if (c=='['){
+            c=leeSiguiente();
+            if (c=='e'){
+                c=leeSiguiente;
+                if (c==']'){
+                    c=leeSiguiente();
+                    if (c=='{'){
+                        c=leeSiguiente;
+                        B();
+                        if (c=='}'){
+                            c=leeSiguiente(),
+                        }else{
+                            printf("Algo esta mal en N \n");
+                        }
+                    }else{
+                        printf("Algo esta mal en N \n");
+                    }
+                }else{
+                    printf("Algo esta mal en N \n");
+                }  
+            }else{
+                printf("Algo esta mal en N \n");
+            }
+        }else{
+            printf("Algo esta mal en N \n");
+        }  
+    }else{
+        printf("Algo esta mal en N \n");
+    }
 }
