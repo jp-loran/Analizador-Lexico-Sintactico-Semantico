@@ -20,7 +20,9 @@ void YP();
 void VP();
 void B();
 void S();
+//producciones charly
 void J();
+void N();
 
 char crearArray(FILE* archAtomos){
     if(archAtomos!= NULL){
@@ -334,7 +336,7 @@ void N(){
                         c=leeSiguiente;
                         B();
                         if (c=='}'){
-                            c=leeSiguiente(),
+                            c=leeSiguiente();
                         }else{
                             printf("Algo esta mal en N \n");
                         }
@@ -354,3 +356,4 @@ void N(){
         printf("Algo esta mal en N \n");
     }
 }
+
