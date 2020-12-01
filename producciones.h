@@ -62,7 +62,7 @@ void DP(){
         DP();
         printf("Estamos en DP \n");
         return;
-    }else if(c=='['||c=='a'||c=='x'||c=='i'||c=='w'||c=='h'||c=='p'||c=='u'||c=='t')
+    }else if(c=='['||c=='a'||c=='x'||c=='i'||c=='w'||c=='h'||c=='p'||c=='u'||c=='t'||c=='}')
     {
         return;
     }
