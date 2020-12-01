@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
 char c;
 int n=0;
 char* arrayAtomos=NULL;
