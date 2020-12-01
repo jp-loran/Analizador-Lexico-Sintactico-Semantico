@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
 char c;
 int n=0;
 char* arrayAtomos=NULL;
@@ -17,6 +18,8 @@ void G();
 void C();
 void YP();
 void VP();
+void B();
+void S();
 
 char crearArray(FILE* archAtomos){
     if(archAtomos!= NULL){
@@ -40,7 +43,7 @@ char leeSiguiente(){
 }
 
 void P(){
-    if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g' || c=='[')
+    if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g'|| c=='[')
     {
         DP();
         Y();
@@ -49,23 +52,23 @@ void P(){
     }
     else
     {
-        printf("Algo esta mal \n");
+        printf("Algo esta mal en P \n");
     }   
 }
 void DP(){
-    if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g' || c=='[')
+    if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g')
     {
         D();
         DP();
         printf("Estamos en DP \n");
         return;
-    }else if(c==']'||c=='}')
+    }else if(c=='['||c=='a'||c=='x'||c=='i'||c=='w'||c=='h'||c=='p'||c=='u'||c=='t')
     {
         return;
     }
     else
     {
-        printf("Algo esta mal ***** \n");
+        printf("Algo esta mal en DP \n");
     }
 }
 void D(){
@@ -76,24 +79,23 @@ void D(){
         if (c==':')
         {
             c=leeSiguiente();
+            printf("Estamos en D; siguiente caracter %c \n",c);
             return;
         }else{printf("Algo esta mal ****** \n");}
-        
-        printf("Estamos en D \n");
     
     }else
     {
-        printf("Algo esta mal ******** \n");  
+        printf("Algo esta mal en D \n");  
     }
 }
 void V(){
     if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g'){
         c=leeSiguiente();
-        printf("Estamos en V \n");
+        printf("Estamos en V; siguiente caracter %c \n",c);
         return;
     }else
     {
-        printf("Algo esta mal \n");
+        printf("Algo esta mal en V \n");
     }
     
 }
@@ -101,13 +103,13 @@ void L(){
     if (c=='a')
     {
         c=leeSiguiente();
-        printf("Estamos en L: %c \n",c);
+        printf("Estamos en L; siguiente caracter %c \n",c);
         G();
         C();
         return;
     }else
     {
-        printf("Algo esta mal \n");
+        printf("Algo esta mal en L \n");
     }
 }
 void G(){
@@ -120,18 +122,18 @@ void G(){
             if (c==']')
             {                
                 c=leeSiguiente();
-                printf("Estamos en L: %c \n",c);
+                printf("Estamos en G; siguiente caracter %c \n",c);
                 return;
             }else{printf("Algo esta mal \n");}
             
         }else{printf("Algo esta mal \n");}
         
-    }else if(c==','){
+    }else if(c==',' ||c==':' ||c==')' ||c=='*' ||c=='/' ||c=='%' ||c=='#' ||c=='+' ||c=='-' ||c=='!' ||c=='?' ||c=='<'||c=='>'||c=='y'||c=='m'){
         return;
     }
     else
     {
-        printf("Algo esta mal \n");  
+        printf("Algo esta mal en G\n");  
     }
     
     
@@ -147,7 +149,7 @@ void C(){
         return;
     }else
     {
-        printf("Algo esta mal \n");  
+        printf("Algo esta mal en C \n");  
     }
 }
 void Y(){
@@ -167,8 +169,9 @@ void Y(){
                     if (c=='{')
                     {
                         c=leeSiguiente();
+                        printf("Estamos en Y; siguiente caracter: %c \n",c);
                         DP();
-                        //B();
+                        B();
                         if (c=='}')
                         {
                             c=leeSiguiente();
@@ -192,7 +195,7 @@ void Y(){
         return;
     }else
     {
-        printf("Algo esta mal \n");  
+        printf("Algo esta mal en Y \n");  
     }   
 }
 void YP(){
@@ -201,12 +204,12 @@ void YP(){
         Y();
         YP();
         return;
-    }else if (c=='\0')
+    }else if (c=='\0' || c==']')
     {
         return;
     }else
     {
-        printf("Algo esta mal \n");  
+        printf("Algo esta mal en YP \n");  
     }
 }
 void VP(){
@@ -218,7 +221,75 @@ void VP(){
     {
         c=leeSiguiente();
         return;
+    }else{
+        printf("Algo esta mal en VP");
+    }
+}
+void B(){
+    if (c=='['||c=='a'||c=='x'||c=='i'||c=='w'||c=='h'||c=='p'||c=='u'||c=='t')
+    {
+        S();
+        B();
+        return;
+    }
+    else if(c=='}'||c==']'){
+        return;
+    }
+    else
+    {
+        printf("Algo esta mal en B");
+    }
+}
+
+
+void S(){
+    printf("estamos en S");
+    return;
+}
+/*void S(){ 
+    if (c=='a')
+    {
+        A();
+        return;
+    }
+    else if (c=='x')
+    {
+        X();
+        return;
+    }
+    else if (c=='i')
+    {
+        I();
+        return;
+    }
+    else if(c=='w')
+    {
+        W();
+        return;
+    }
+    else if (c=='h')
+    {
+        H();
+        return;
+    }
+    else if(c=='p')
+    {
+        N();
+        return;
+    }
+    else if (c=='u')
+    {
+        c=leeSiguiente();
+        U();
+        if (c==':')
+        {
+            c=leeSiguiente();
+            return;
+        }else
+        {
+            printf("Algo esta mal en S :");
+        }       
+        
     }
     
-    
-}
+} */
