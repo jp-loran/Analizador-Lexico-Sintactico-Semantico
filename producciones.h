@@ -279,7 +279,29 @@ void U(){
 void W(){
     if (c=='w')
     {
-        /* code */
+        c=getchar();
+        if (c=='(')
+        {
+            c=getchar();
+            R();
+            if (c==')')
+            {
+                c=getchar();
+                if (c=='{')
+                {
+                    c=getchar();
+                    B();
+                    if (c=='}')
+                    {
+                        return;
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
     }
     
 }

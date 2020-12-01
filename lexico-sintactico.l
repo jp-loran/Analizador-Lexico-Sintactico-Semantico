@@ -11,6 +11,8 @@ Instrucciones de ejecucion
         $gcc lex.yy.c -lfl
         $./a.out nombre_archivo.txt  
 */
+#include "producPrueba.h"
+
 FILE *archSal, *archTablas, *archTokens, *archError;
 FILE *archAtomos;
 
@@ -488,6 +490,7 @@ error [^constan_entepalabra_residentificadorconstante_realsim_especialopera_arit
         }
 {error}  fprintf(archError,"%s Es un Error\n",yytext);
 %%
+
 int main(int argc, char *argv[]){
     
     yyin = fopen(argv[1],"r");
@@ -515,9 +518,18 @@ int main(int argc, char *argv[]){
     fclose(archTokens);
     fclose(archError);
 
+
+    archAtomos = fopen("atomos.txt","r");
+    
+    c=crearArray(archAtomos);
+
+    fclose(archAtomos);
+
+    P();
     return 0;
 }
 
 int obtenerASCII(char *caracter){
     return (int)*caracter;
 }
+

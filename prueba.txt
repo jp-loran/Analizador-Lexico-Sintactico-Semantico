@@ -1,7 +1,3 @@
-@ 
-int main(){
-    int identificador_1:
-    float identificador_1 = 1.345E-3;
-    identificador_1 = identificador_1**3:
-    printf("hola como estas"):
-}
+ [int main(){
+
+}]
