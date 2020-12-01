@@ -11,7 +11,7 @@ Instrucciones de ejecucion
         $gcc lex.yy.c -lfl
         $./a.out nombre_archivo.txt  
 */
-#include "producPrueba.h"
+#include "producciones.h"
 
 FILE *archSal, *archTablas, *archTokens, *archError;
 FILE *archAtomos;

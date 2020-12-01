@@ -1,17 +1,43 @@
-#include <stdio.h> 
-
-void P();
-void YP();
-void Y();
-void VP();
-void DP();
-void B();
-void error();
-char leerSiguiente(char atomo[]);
-
+#include<stdio.h>
 char c;
-char n;
+int n=0;
+char* arrayAtomos=NULL;
+size_t size;
 
+// char leeSiguiente();
+
+char crearArray(FILE* archAtomos);
+void P();
+void DP();
+void Y();
+void D();
+void V();
+void L();
+void G();
+void C();
+void YP();
+void VP();
+
+char crearArray(FILE* archAtomos){
+    if(archAtomos!= NULL){
+            size=1;
+            while(getc(archAtomos)!=EOF){
+                size++;
+            }
+        }
+        arrayAtomos=(char*)malloc(sizeof(char)*size);
+        fseek(archAtomos,0,SEEK_SET);
+        for (size_t i =0; i<size-1;i++){
+            arrayAtomos[i]=(char)getc(archAtomos);
+        }
+        arrayAtomos[size-1]='\0';
+    return arrayAtomos[n];
+}
+
+char leeSiguiente(){
+    n++;
+    return arrayAtomos[n];
+}
 
 void P(){
     if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g' || c=='[')
@@ -23,91 +49,25 @@ void P(){
     }
     else
     {
-        error();
+        printf("Algo esta mal \n");
     }   
 }
-void YP(){
-    if (c=='[')
-    {
-        Y();
-        YP();
-    }
-    else if(c == '\0'){
-        return;
-    }
-    else
-    {
-        error();
-    }
-}
-void Y(){
-    if (c=='[')
-    {
-        c=getchar();
-        VP();
-        if (c=='a')
-        {
-            c=getchar();
-            if (c=='(')
-            {
-                c=getchar();
-                if (c==')')
-                {
-                    c=getchar();
-                    if (c=='{')
-                    {
-                        c=getchar();
-                        DP();
-                        B();
-                        if (c=='}')
-                        {
-                            c=getchar();
-                            if (c==']')
-                            {
-                                c=getchar();
-                            } else{ error(); }
-                            
-                        } else{ error(); }
-                        
-                    } else{ error(); }
-                    
-                } else{ error(); }
-                
-            } else{ error(); }
-            
-        } else{ error(); }
-    }else{ error(); }
-    
-}
-void VP(){
-    if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g')
-    {
-        V();
-    }
-    else if(c=='o'){
-        c=getchar();
-        return;
-    }
-    else
-    {
-        error();
-    }
-}
 void DP(){
-    if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g')
+    if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g' || c=='[')
     {
         D();
         DP();
+        printf("Estamos en DP \n");
         return;
-    }else if (c==']' || c=='}')
+    }else if(c==']'||c=='}')
     {
         return;
-    }else
+    }
+    else
     {
-        error();
+        printf("Algo esta mal ***** \n");
     }
 }
-
 void D(){
     if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g')
     {
@@ -115,207 +75,150 @@ void D(){
         L();
         if (c==':')
         {
-            c=getchar();
-        }else
-        {
-            error();
-        }
+            c=leeSiguiente();
+            return;
+        }else{printf("Algo esta mal ****** \n");}
+        
+        printf("Estamos en D \n");
+    
+    }else
+    {
+        printf("Algo esta mal ******** \n");  
+    }
+}
+void V(){
+    if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g'){
+        c=leeSiguiente();
+        printf("Estamos en V \n");
         return;
     }else
     {
-        error();
+        printf("Algo esta mal \n");
     }
     
 }
-    
 void L(){
     if (c=='a')
     {
-        c=getchar();
+        c=leeSiguiente();
+        printf("Estamos en L: %c \n",c);
         G();
         C();
         return;
     }else
     {
-        error();
-    }
-}
-void C(){
-    if (c==',')
-    {
-        c=getchar();
-        L();
-        return;
-    }else if(c==':')
-    {
-        return;   
-    }else
-    {
-        error();
-    }
-}
-void V(){
-    if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g')
-    {
-        c=getchar();
-        return;
-    }else
-    {
-        error();
+        printf("Algo esta mal \n");
     }
 }
 void G(){
     if (c=='[')
     {
-        c=getchar();
+        c=leeSiguiente();
         if (c=='e')
         {
-            c=getchar();
+            c=leeSiguiente();
             if (c==']')
-            {
-                c=getchar();
+            {                
+                c=leeSiguiente();
+                printf("Estamos en L: %c \n",c);
                 return;
-            }
+            }else{printf("Algo esta mal \n");}
             
-        } 
+        }else{printf("Algo esta mal \n");}
+        
+    }else if(c==','){
+        return;
     }
     else
     {
-        error();
-    }
-}
-void S(){
-    if (/*PRODUCCION A*/)
-    {
-        /* code */
-    }else if(c=='x'){
-        X();
-        return;
-    }else if (c=='i')
-    {
-        I();
-        return
-    }else if (c=='w')
-    {
-        W();
-        return;
-    }else if (c=='h')
-    {
-        H();
-        return;
-    }else if (c=='p')
-    {
-        N();
-        return;
-    }else if (c=='u')
-    {
-        c=getchar();
-        U();
-        if (c==':')
-        {
-            c=getchar();
-            return;
-        }else
-        {
-            error();
-        }
-    }else if(c=='t'){
-        c=getchar();
-        if (c==':')
-        {
-            c=getchar();
-            return;
-        }else
-        {
-            error();
-        }
-    }else if (c=='[')
-    {
-        c=getchar();
-        if (c=='a')
-        {
-            c=getchar();
-            if (c=='(')
-            {
-                c=getchar();
-                if (c==')')
-                {
-                    c=getchar();
-                    if (c==']')
-                    {
-                        c==getchar();
-                        if (c==':')
-                        {
-                            c=getchar();
-                            return;
-                        }else{error();}
-                        
-                    }else{error();}
-                    
-                }else{error();}
-                
-            }else{error();}
-            
-        }else{error();}
-        
-    }else{error();}
-}   
-
-void U(){
-    if (c==':')
-    {
-        return;
-    }else if(c=='('){
-        c=getchar();
-        F();
-        if (c==')')
-        {
-            c=getchar();
-        }else{ error();}
-        return;
-    }else{ error();}
-}
-
-void W(){
-    if (c=='w')
-    {
-        c=getchar();
-        if (c=='(')
-        {
-            c=getchar();
-            R();
-            if (c==')')
-            {
-                c=getchar();
-                if (c=='{')
-                {
-                    c=getchar();
-                    B();
-                    if (c=='}')
-                    {
-                        return;
-                    }
-                    
-                }
-                
-            }
-            
-        }
-        
+        printf("Algo esta mal \n");  
     }
     
+    
 }
-
-void B(){
-    printf("Produccion B");
+void C(){
+    if (c==',')
+    {
+        c=leeSiguiente();
+        L();
+        printf("Estamos en C \n");
+        return;
+    }else if(c==':'){
+        return;
+    }else
+    {
+        printf("Algo esta mal \n");  
+    }
 }
-
-/*Función de error*/
-
-void error(){
-    printf("Encontré un error");
+void Y(){
+    if (c=='[')
+    {
+        c=leeSiguiente();
+        VP();
+        if (c=='a')
+        {
+            c=leeSiguiente();
+            if (c=='(')
+            {
+                c=leeSiguiente();
+                if (c==')')
+                {
+                    c=leeSiguiente();
+                    if (c=='{')
+                    {
+                        c=leeSiguiente();
+                        DP();
+                        //B();
+                        if (c=='}')
+                        {
+                            c=leeSiguiente();
+                            if (c==']')
+                            {
+                                c=leeSiguiente();
+                                return;
+                            }else{printf("Algo esta mal \n");}
+                            
+                        }else{printf("Algo esta mal \n");}
+                        
+                    }else{printf("Algo esta mal \n");}
+                    
+                }else{printf("Algo esta mal \n");}
+                
+            }else{printf("Algo esta mal \n");}
+            
+        }else{printf("Algo esta mal \n");}
+        
+    }else if(c==':'){
+        return;
+    }else
+    {
+        printf("Algo esta mal \n");  
+    }   
 }
-
-char leerSiguiente(char atomo[]){
-    return atomo[n+1];
+void YP(){
+    if (c=='[')
+    {
+        Y();
+        YP();
+        return;
+    }else if (c=='\0')
+    {
+        return;
+    }else
+    {
+        printf("Algo esta mal \n");  
+    }
+}
+void VP(){
+    if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g')
+    {
+        V();
+        return;
+    }else if (c=='o')
+    {
+        c=leeSiguiente();
+        return;
+    }
+    
+    
 }
