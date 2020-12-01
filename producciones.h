@@ -303,18 +303,18 @@ void J(){
                 return;
             }
             else{
-                printf("Algo esta mal en L \n");
+                printf("Algo esta mal en J \n");
             }
             
         }
         else{
-            printf("Algo esta mal en L \n");
+            printf("Algo esta mal en J \n");
         } 
     }
     else if (c==':'){
         return;
     }else{
-        printf("Algo esta mal en L \n");
+        printf("Algo esta mal en J \n");
     }
     
 
