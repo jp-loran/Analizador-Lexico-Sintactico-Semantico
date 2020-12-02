@@ -26,6 +26,7 @@ void H();
 void X();
 void O();
 void I();
+
 void J();
 void N();
 void R();
@@ -158,7 +159,7 @@ void G(){
                 return;
             }else{error("]",c);}
             
-        }else{error("constante entera",c);}
+        }else{error("constante entera*****",c);}
         
     }else if(c==',' ||c==':' ||c==')' ||c=='*' ||c=='/' ||c=='%' ||c=='#' ||c=='+' ||c=='-' ||c=='!' ||c=='?' ||c=='<'||c=='>'||c=='y'||c=='m'){
         
@@ -755,6 +756,7 @@ void F(){
         c=leeSiguiente();
         E();
         if(c==')'){
+            c=leeSiguiente();
             return;
         }else{
             printf("Algo esta mal en F \n");
@@ -766,9 +768,11 @@ void F(){
         return;
     }
     else if(c=='e'){
+        c=leeSiguiente();
         return;
     }
     else if(c=='r'){
+        c=leeSiguiente();
         return;
     }
     else if (c=='['){
@@ -780,6 +784,7 @@ void F(){
                 if(c==')'){
                     c=leeSiguiente();
                     if(c==']'){
+                        c=leeSiguiente();
                         return;
                     }else{
                         printf("Algo esta mal en F \n");
@@ -803,12 +808,13 @@ void A(){
     if (c=='a'){
         c=leeSiguiente();
         if (c=='='){
-            c==leeSiguiente();
+            c=leeSiguiente();
             M();
             if (c==':'){
+                c=leeSiguiente();
                 return;
             }else{
-              printf("Algo esta mal en A \n");  
+              printf("Algo esta mal en A *****\n");  
             }
         }else{
             printf("Algo esta mal en A \n");
