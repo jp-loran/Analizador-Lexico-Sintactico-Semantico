@@ -765,8 +765,8 @@ void A(){
             M();
             if (c==':'){
                 return;
-            }else error(" :",c);
-        }else error(" =",c);
+            }else error(":",c);
+        }else error("=",c);
     }else error("identificador",c);
 }
 
