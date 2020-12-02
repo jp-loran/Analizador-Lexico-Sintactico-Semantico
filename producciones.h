@@ -725,6 +725,7 @@ void F(){
         c=leeSiguiente();
         E();
         if(c==')'){
+            c=leeSiguiente();
             return;
         }else error("(",c);
     }
@@ -767,6 +768,7 @@ void A(){
             c=leeSiguiente();
             M();
             if (c==':'){
+                c=leeSiguiente();
                 return;
             }else error(":",c);
         }else error("=",c);
