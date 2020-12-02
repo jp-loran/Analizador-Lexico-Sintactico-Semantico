@@ -401,16 +401,17 @@ void U(){
 
 void W(){
     if (c=='w')
-    {
-        
+    {        
         c=leeSiguiente();
         if(c=='('){
+            c=leeSiguiente();
             R();
             if (c==')')
             {
                 c=leeSiguiente();
                 if (c=='{')
                 {
+                    c=leeSiguiente();
                     B();
                     if (c=='}')
                     {
@@ -436,6 +437,7 @@ void H(){
         c=leeSiguiente();
         if (c=='{')
         {
+            c=leeSiguiente();
             B();
             if (c=='}')
             {
@@ -445,6 +447,7 @@ void H(){
                    c=leeSiguiente();
                    if (c=='(')
                    {
+                       c=leeSiguiente();
                        R();
                        if (')')
                        {
@@ -474,40 +477,46 @@ void H(){
 void X(){
     if (c=='x')
     {
-        
         c=leeSiguiente();
         if (c=='(')
         {
             c=leeSiguiente();
+            
             if (c=='a')
             {
                 c=leeSiguiente();
-                if (c=='{')
-                {
-                    O();
-                    if (c=='d')
+                if(c==')'){
+                    c=leeSiguiente();
+                    if (c=='{')
                     {
                         c=leeSiguiente();
-                        if (c=='[')
+                        O();
+                        if (c=='d')
                         {
-                            B();
-                            if (c==']')
+                            c=leeSiguiente();
+                            if (c=='[')
                             {
                                 c=leeSiguiente();
-                                if (c=='}')
+                                B();
+                                if (c==']')
                                 {
                                     c=leeSiguiente();
-                                    return;
-                                }else{error("}",c);}
+                                    if (c=='}')
+                                    {
+                                        c=leeSiguiente();
+                                        return;
+                                    }else{error("}",c);}
+                                    
+                                }else{error("]",c);}
                                 
-                            }else{error("]",c);}
+                            }else{error("[",c);}
                             
-                        }else{error("[",c);}
+                        }else{error("la palabra reservada default",c);}
                         
-                    }else{error("la palabra reservada default",c);}
-                    
-                }else{error("{",c);}
-                
+                    }else{error("{",c);}
+
+                }else{error(")",c);}
+
             }else{error("un idendtificador",c);}
             
         }else{error("(",c);}
@@ -521,13 +530,13 @@ void X(){
 void O(){
     if (c=='k')
     {
-        
         c=leeSiguiente();
         if (c=='e')
         {
             c=leeSiguiente();
             if (c=='[')
             {
+                c=leeSiguiente();
                 B();
                 if (c==']')
                 {
@@ -537,6 +546,7 @@ void O(){
                         c=leeSiguiente();
                         if (c==':')
                         {
+                            c=leeSiguiente();
                             O();
                             return;
                         }else{error(":",c);}
@@ -553,7 +563,6 @@ void O(){
     }
     else if(c=='d')
     {
-        
         return;
     }
     else
@@ -568,6 +577,7 @@ void I(){
         c=leeSiguiente();
         if (c=='(')
         {
+            
             R();
             if (c==')')
             {

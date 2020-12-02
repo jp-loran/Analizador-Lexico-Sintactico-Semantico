@@ -2,5 +2,13 @@
 {
     int a,b:
     a = b:
+    do{
+        b=b:
+    }
+    while(a>5):
+
+    switch(a){
+        default [cad ="algo mas":]
+    }
 }
 ]
