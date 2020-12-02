@@ -734,9 +734,11 @@ void F(){
         return;
     }
     else if(c=='e'){
+        c=leeSiguiente();
         return;
     }
     else if(c=='r'){
+        c=leeSiguiente();
         return;
     }
     else if (c=='['){
@@ -748,6 +750,7 @@ void F(){
                 if(c==')'){
                     c=leeSiguiente();
                     if(c==']'){
+                        c=leeSiguiente();
                         return;
                     }else error(" ]",c);
                 }else error(" )",c);
@@ -761,7 +764,7 @@ void A(){
     if (c=='a'){
         c=leeSiguiente();
         if (c=='='){
-            c==leeSiguiente();
+            c=leeSiguiente();
             M();
             if (c==':'){
                 return;
