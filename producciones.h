@@ -23,6 +23,10 @@ void S();
 //producciones charly
 void J();
 void N();
+void R();
+void K();
+void E();
+void EP();
 
 char crearArray(FILE* archAtomos){
     if(archAtomos!= NULL){
@@ -307,8 +311,7 @@ void J(){
             }
             else{
                 printf("Algo esta mal en J \n");
-            }
-            
+            } 
         }
         else{
             printf("Algo esta mal en J \n");
@@ -319,8 +322,6 @@ void J(){
     }else{
         printf("Algo esta mal en J \n");
     }
-    
-
 }
 
 void N(){
@@ -329,14 +330,15 @@ void N(){
         if (c=='['){
             c=leeSiguiente();
             if (c=='e'){
-                c=leeSiguiente;
+                c=leeSiguiente();
                 if (c==']'){
                     c=leeSiguiente();
                     if (c=='{'){
-                        c=leeSiguiente;
+                        c=leeSiguiente();
                         B();
                         if (c=='}'){
                             c=leeSiguiente();
+                            return;
                         }else{
                             printf("Algo esta mal en N \n");
                         }
@@ -357,3 +359,45 @@ void N(){
     }
 }
 
+void R(){
+    if (c=='(' || c=='a' ||c=='e' || c=='r' || c=='[' ){
+        E();
+        K();
+        E();
+        return;
+    }else{
+        printf("Algo esta mal en R \n");
+    }
+}
+
+void K(){
+    if (c=='!' || c=='?' || c=='>' || c=='<' || c=='y' ||c=='m'){
+        c=leeSiguiente();
+        printf("Estamos en K, caracter %c",c);
+        return;
+    }else{
+        printf("Algo esta mal en K \n");
+    }
+}
+
+void E(){
+    if (c=='(' || c=='a' || c=='e' || c=='r' || c=='['){
+        T();
+        EP();
+        return;
+    }else{
+        printf("Algo esta mal en E \n");
+    }
+
+}
+
+void EP(){
+    if (c=='+'){
+        c=leeSiguiente();
+        T();
+        EP();
+        return;
+    }else{
+        printf("Algo esta mal en EP \n");
+    }
+}
