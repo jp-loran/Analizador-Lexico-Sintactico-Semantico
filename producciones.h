@@ -605,13 +605,13 @@ void J(){
             if (c=='}'){
                 return;
             }
-            else error("Se espera } en lugar de:",c);
+            else error("}",c);
         }
-        else error("Se espera { en lugar de:",c);
+        else error("{",c);
     }
     else if (c==':'){
         return;
-    }else error("Se espera else",c);
+    }else error("else",c);
 }
 
 void N(){
@@ -749,8 +749,8 @@ void F(){
                     c=leeSiguiente();
                     if(c==']'){
                         return;
-                    }else error("Se espera ]",c);
-                }else error("Se espera )",c);
+                    }else error(" ]",c);
+                }else error(" )",c);
             }else error("(",c);
         }else error("identificador",c);
     }
@@ -765,8 +765,8 @@ void A(){
             M();
             if (c==':'){
                 return;
-            }else error("Se espera :",c);
-        }else error("Se espera =",c);
+            }else error(" :",c);
+        }else error(" =",c);
     }else error("identificador",c);
 }
 
