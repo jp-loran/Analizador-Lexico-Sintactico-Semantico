@@ -402,16 +402,17 @@ void U(){
 
 void W(){
     if (c=='w')
-    {
-        
+    {        
         c=leeSiguiente();
         if(c=='('){
+            c=leeSiguiente();
             R();
             if (c==')')
             {
                 c=leeSiguiente();
                 if (c=='{')
                 {
+                    c=leeSiguiente();
                     B();
                     if (c=='}')
                     {
@@ -437,6 +438,7 @@ void H(){
         c=leeSiguiente();
         if (c=='{')
         {
+            c=leeSiguiente();
             B();
             if (c=='}')
             {
@@ -446,6 +448,7 @@ void H(){
                    c=leeSiguiente();
                    if (c=='(')
                    {
+                       c=leeSiguiente();
                        R();
                        if (')')
                        {
@@ -475,40 +478,46 @@ void H(){
 void X(){
     if (c=='x')
     {
-        
         c=leeSiguiente();
         if (c=='(')
         {
             c=leeSiguiente();
+            
             if (c=='a')
             {
                 c=leeSiguiente();
-                if (c=='{')
-                {
-                    O();
-                    if (c=='d')
+                if(c==')'){
+                    c=leeSiguiente();
+                    if (c=='{')
                     {
                         c=leeSiguiente();
-                        if (c=='[')
+                        O();
+                        if (c=='d')
                         {
-                            B();
-                            if (c==']')
+                            c=leeSiguiente();
+                            if (c=='[')
                             {
                                 c=leeSiguiente();
-                                if (c=='}')
+                                B();
+                                if (c==']')
                                 {
                                     c=leeSiguiente();
-                                    return;
-                                }else{error("}",c);}
+                                    if (c=='}')
+                                    {
+                                        c=leeSiguiente();
+                                        return;
+                                    }else{error("}",c);}
+                                    
+                                }else{error("]",c);}
                                 
-                            }else{error("]",c);}
+                            }else{error("[",c);}
                             
-                        }else{error("[",c);}
+                        }else{error("la palabra reservada default",c);}
                         
-                    }else{error("la palabra reservada default",c);}
-                    
-                }else{error("{",c);}
-                
+                    }else{error("{",c);}
+
+                }else{error(")",c);}
+
             }else{error("un idendtificador",c);}
             
         }else{error("(",c);}
@@ -522,13 +531,13 @@ void X(){
 void O(){
     if (c=='k')
     {
-        
         c=leeSiguiente();
         if (c=='e')
         {
             c=leeSiguiente();
             if (c=='[')
             {
+                c=leeSiguiente();
                 B();
                 if (c==']')
                 {
@@ -538,6 +547,7 @@ void O(){
                         c=leeSiguiente();
                         if (c==':')
                         {
+                            c=leeSiguiente();
                             O();
                             return;
                         }else{error(":",c);}
@@ -554,7 +564,6 @@ void O(){
     }
     else if(c=='d')
     {
-        
         return;
     }
     else
@@ -565,19 +574,21 @@ void O(){
 
 void I(){
     if(c=='i'){
-        
         c=leeSiguiente();
         if (c=='(')
         {
+            c=leeSiguiente();
             R();
             if (c==')')
             {
                 c=leeSiguiente();
                 if (c=='{')
                 {
+                    c=leeSiguiente();
                     B();
                     if (c=='}')
                     {
+                        c=leeSiguiente();
                         J();
                         if (c==':')
                         {
@@ -602,23 +613,19 @@ void J(){
     if (c=='l'){
         c=leeSiguiente();
         if (c=='{'){
+            c=leeSiguiente();
             B();
             if (c=='}'){
+                c=leeSiguiente();
                 return;
             }
-            else{
-                printf("Algo esta mal en J \n");
-            } 
+            else error("}",c);
         }
-        else{
-            printf("Algo esta mal en J \n");
-        } 
+        else error("{",c);
     }
     else if (c==':'){
         return;
-    }else{
-        printf("Algo esta mal en J \n");
-    }
+    }else error("else",c);
 }
 
 void N(){
@@ -636,24 +643,12 @@ void N(){
                         if (c=='}'){
                             c=leeSiguiente();
                             return;
-                        }else{
-                            printf("Algo esta mal en N \n");
-                        }
-                    }else{
-                        printf("Algo esta mal en N \n");
-                    }
-                }else{
-                    printf("Algo esta mal en N \n");
-                }  
-            }else{
-                printf("Algo esta mal en N \n");
-            }
-        }else{
-            printf("Algo esta mal en N \n");
-        }  
-    }else{
-        printf("Algo esta mal en N \n");
-    }
+                        }else error(" }",c);
+                    }else error(" {",c);
+                }else error(" ]",c);
+            }else error(" entero",c);
+        }else error(" [",c);
+    }else error(" for",c);
 }
 
 void R(){
@@ -662,19 +657,14 @@ void R(){
         K();
         E();
         return;
-    }else{
-        printf("Algo esta mal en R \n");
-    }
+    }else error(" ( o [ o identificador,entero o real",c);
 }
 
 void K(){
     if (c=='!' || c=='?' || c=='>' || c=='<' || c=='y' ||c=='m'){
         c=leeSiguiente();
-        printf("Estamos en K, caracter %c",c);
         return;
-    }else{
-        printf("Algo esta mal en K \n");
-    }
+    }else error(" operador relacional",c);
 }
 
 void E(){
@@ -682,9 +672,7 @@ void E(){
         T();
         EP();
         return;
-    }else{
-        printf("Algo esta mal en E \n");
-    }
+    }else error("identificador, real, entero o ( [",c);
 
 }
 
@@ -702,9 +690,7 @@ void EP(){
     }
     else if (c==')' || c=='!' || c=='?' || c=='>'|| c=='<'|| c=='y'|| c=='m'|| c==':'){
         return;
-    }else{
-        printf("Algo esta mal en EP \n");
-    }
+    }else error("operador o fin de linea",c);
 }
 
 void T(){
@@ -712,9 +698,7 @@ void T(){
         F();
         TP();
         return;
-    }else{
-        printf("Algo esta mal en T \n");
-    }
+    }else error("identificador, real, entero o ( [",c);
 
 }
 
@@ -746,9 +730,7 @@ void TP(){
     else if(c=='+' ||c=='-' ||c==')' ||c=='!' ||c=='?' ||c=='>' ||c=='<' ||c=='y' ||c=='m' ||c==':' ){
         return;
     }
-    else{
-        printf("Algo esta mal en TP \n");
-    }
+    else error("operador aritmetico, relacional  fin de linea",c);
 }
 
 void F(){
@@ -758,9 +740,7 @@ void F(){
         if(c==')'){
             c=leeSiguiente();
             return;
-        }else{
-            printf("Algo esta mal en F \n");
-        }
+        }else error("(",c);
     }
     else if(c=='a'){
         c=leeSiguiente();
@@ -786,22 +766,12 @@ void F(){
                     if(c==']'){
                         c=leeSiguiente();
                         return;
-                    }else{
-                        printf("Algo esta mal en F \n");
-                    }
-                }else{
-                    printf("Algo esta mal en F \n");
-                }
-            }else{
-                printf("Algo esta mal en F \n");
-            }
-        }else{
-            printf("Algo esta mal en F \n");
-        }
+                    }else{error(" ]",c);}
+                }else {error(" )",c);}
+            }else {error("(",c);}
+        }else {error("identificador",c);}
     }
-    else{
-        printf("Algo esta mal en F \n");
-    }
+    else {error("[",c);}
 }
 
 void A(){
@@ -813,15 +783,9 @@ void A(){
             if (c==':'){
                 c=leeSiguiente();
                 return;
-            }else{
-              printf("Algo esta mal en A *****\n");  
-            }
-        }else{
-            printf("Algo esta mal en A \n");
-        }
-    }else{
-        printf("Algo esta mal en A \n");
-    }
+            }else {error(":",c);}
+        }else {error("=",c);}
+    }else {error("identificador",c);}
 }
 
 void M(){
@@ -834,9 +798,7 @@ void M(){
         Q();
         Z();
         return;
-    }else{
-        printf("Algo esta mal en M \n");
-    }
+    }else {error("identificador, real, entero o cadena ( [ o +",c);}
 }
 
 void Z(){
@@ -849,9 +811,7 @@ void Z(){
     else if (c==':'){
         return;
     }
-    else{
-        printf("Algo esta mal en Z \n");
-    }
+    else {error(" , o :",c);}
 }
 
 void Q(){
@@ -863,6 +823,8 @@ void Q(){
         c=leeSiguiente();
         return;
     }
+    else {error("identificador o cadena",c);}
+    
 }
 
 void QP(){
@@ -874,6 +836,7 @@ void QP(){
         E();
         return;
     }
+    else {error("identificador, real, entero o cadena ( [",c);}
 }
 
 

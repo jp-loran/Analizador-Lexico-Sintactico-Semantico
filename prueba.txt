@@ -1,6 +1,6 @@
-[ void funcion1()
+[ void funcion()
 {
-int a,b:
-a=b:
+    int a,b:
+    b=cadena[1]:
 }
 ]
