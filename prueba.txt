@@ -1,6 +1,6 @@
 [ void funcion()
 {
-    int a,b:
+    int a[3],b:
     b=+cadena[1],"algo","adios":
 }
 ]
