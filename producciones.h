@@ -611,7 +611,7 @@ void J(){
     }
     else if (c==':'){
         return;
-    }else error("Se espera l",c);
+    }else error("Se espera else",c);
 }
 
 void N(){
@@ -632,9 +632,9 @@ void N(){
                         }else error("Se espera }",c);
                     }else error("Se espera {",c);
                 }else error("Se espera ]",c);
-            }else error("Se espera e",c);
+            }else error("Se espera entero",c);
         }else error("Se espera [",c);
-    }else error("Se espera p",c);
+    }else error("Se espera for",c);
 }
 
 void R(){
