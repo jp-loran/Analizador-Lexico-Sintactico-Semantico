@@ -529,7 +529,7 @@ int main(int argc, char *argv[]){
     if(c=='\0'){
         printf("Analisis léxico concluido sin errores \n");
     }else{
-        printf("Se encontraron errores \n");
+        printf("Se encontraron errores durante el análsis léxico \n");
     }
     return 0;
 }

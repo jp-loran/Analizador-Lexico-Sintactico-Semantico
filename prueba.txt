@@ -2,7 +2,7 @@ int a, b,c[7]:
 bool perro:
 char z, x:
 float f1:
-string s:
+string cadena[4],cad:
 
 [void funcionA()
 	{
@@ -41,7 +41,7 @@ string s:
 [int funcion2()
 	{
 		int hola:
-		string cadena
+		string cadena:
 		hola = 2.54E-5:
 		cadena = "no":
 	}
