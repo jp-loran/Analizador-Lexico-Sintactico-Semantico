@@ -526,6 +526,11 @@ int main(int argc, char *argv[]){
     fclose(archAtomos);
 
     P();
+    if(c=='\0'){
+        printf("Analisis léxico concluido sin errores \n");
+    }else{
+        printf("Se encontraron errores \n");
+    }
     return 0;
 }
 
