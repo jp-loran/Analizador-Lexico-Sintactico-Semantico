@@ -20,6 +20,21 @@ void YP();
 void VP();
 void B();
 void S();
+//producciones charly
+void J();
+void N();
+void R();
+void K();
+void E();
+void EP();
+void T();
+void TP();
+void F();
+void A();
+void M();
+void Z();
+void Q();
+void QP();
 
 char crearArray(FILE* archAtomos){
     if(archAtomos!= NULL){
@@ -293,3 +308,276 @@ void S(){
     }
     
 } */
+
+void J(){
+    if (c=='l'){
+        c=leeSiguiente();
+        if (c=='{'){
+            B();
+            if (c=='}'){
+                return;
+            }
+            else{
+                printf("Algo esta mal en J \n");
+            } 
+        }
+        else{
+            printf("Algo esta mal en J \n");
+        } 
+    }
+    else if (c==':'){
+        return;
+    }else{
+        printf("Algo esta mal en J \n");
+    }
+}
+
+void N(){
+    if (c=='p'){
+        c=leeSiguiente();
+        if (c=='['){
+            c=leeSiguiente();
+            if (c=='e'){
+                c=leeSiguiente();
+                if (c==']'){
+                    c=leeSiguiente();
+                    if (c=='{'){
+                        c=leeSiguiente();
+                        B();
+                        if (c=='}'){
+                            c=leeSiguiente();
+                            return;
+                        }else{
+                            printf("Algo esta mal en N \n");
+                        }
+                    }else{
+                        printf("Algo esta mal en N \n");
+                    }
+                }else{
+                    printf("Algo esta mal en N \n");
+                }  
+            }else{
+                printf("Algo esta mal en N \n");
+            }
+        }else{
+            printf("Algo esta mal en N \n");
+        }  
+    }else{
+        printf("Algo esta mal en N \n");
+    }
+}
+
+void R(){
+    if (c=='(' || c=='a' ||c=='e' || c=='r' || c=='[' ){
+        E();
+        K();
+        E();
+        return;
+    }else{
+        printf("Algo esta mal en R \n");
+    }
+}
+
+void K(){
+    if (c=='!' || c=='?' || c=='>' || c=='<' || c=='y' ||c=='m'){
+        c=leeSiguiente();
+        printf("Estamos en K, caracter %c",c);
+        return;
+    }else{
+        printf("Algo esta mal en K \n");
+    }
+}
+
+void E(){
+    if (c=='(' || c=='a' || c=='e' || c=='r' || c=='['){
+        T();
+        EP();
+        return;
+    }else{
+        printf("Algo esta mal en E \n");
+    }
+
+}
+
+void EP(){
+    if (c=='+'){
+        c=leeSiguiente();
+        T();
+        EP();
+        return;
+    }
+    else if (c=='-'){
+        c=leeSiguiente();
+        T();
+        EP();
+    }
+    else if (c==')' || c=='!' || c=='?' || c=='>'|| c=='<'|| c=='y'|| c=='m'|| c==':'){
+        return;
+    }else{
+        printf("Algo esta mal en EP \n");
+    }
+}
+
+void T(){
+    if (c=='(' || c=='a' || c=='e' || c=='r' || c=='['){
+        F();
+        TP();
+        return;
+    }else{
+        printf("Algo esta mal en T \n");
+    }
+
+}
+
+void TP(){
+    if (c=='*'){
+        c=leeSiguiente();
+        F();
+        TP();
+        return;
+    }
+    else if(c=='/'){
+        c=leeSiguiente();
+        F();
+        TP();
+        return;
+    }
+    else if(c=='%'){
+        c=leeSiguiente();
+        F();
+        TP();
+        return;
+    }
+    else if(c=='#'){
+        c=leeSiguiente();
+        F();
+        TP();
+        return;
+    }
+    else if(c=='+' ||c=='-' ||c==')' ||c=='!' ||c=='?' ||c=='>' ||c=='<' ||c=='y' ||c=='m' ||c==':' ){
+        return;
+    }
+    else{
+        printf("Algo esta mal en TP \n");
+    }
+}
+
+void F(){
+    if (c=='('){
+        c=leeSiguiente();
+        E();
+        if(c==')'){
+            return;
+        }else{
+            printf("Algo esta mal en F \n");
+        }
+    }
+    else if(c=='a'){
+        c=leeSiguiente();
+        G();
+        return;
+    }
+    else if(c=='e'){
+        return;
+    }
+    else if(c=='r'){
+        return;
+    }
+    else if (c=='['){
+        c=leeSiguiente();
+        if (c=='a'){
+            c=leeSiguiente();
+            if(c=='('){
+                c=leeSiguiente();
+                if(c==')'){
+                    c=leeSiguiente();
+                    if(c==']'){
+                        return;
+                    }else{
+                        printf("Algo esta mal en F \n");
+                    }
+                }else{
+                    printf("Algo esta mal en F \n");
+                }
+            }else{
+                printf("Algo esta mal en F \n");
+            }
+        }else{
+            printf("Algo esta mal en F \n");
+        }
+    }
+    else{
+        printf("Algo esta mal en F \n");
+    }
+}
+
+void A(){
+    if (c=='a'){
+        c=leeSiguiente();
+        if (c=='='){
+            c==leeSiguiente();
+            M();
+            if (c==':'){
+                return;
+            }else{
+              printf("Algo esta mal en A \n");  
+            }
+        }else{
+            printf("Algo esta mal en A \n");
+        }
+    }else{
+        printf("Algo esta mal en A \n");
+    }
+}
+
+void M(){
+    if (c=='(' ||c=='a' ||c=='e' ||c=='r' ||c=='[' ||c=='s'){
+        QP();
+        return;
+    }
+    else if(c=='+'){
+        c=leeSiguiente();
+        Q();
+        Z();
+        return;
+    }else{
+        printf("Algo esta mal en M \n");
+    }
+}
+
+void Z(){
+    if(c==','){
+        c=leeSiguiente();
+        Q();
+        Z();
+        return;
+    }
+    else if (c==':'){
+        return;
+    }
+    else{
+        printf("Algo esta mal en Z \n");
+    }
+}
+
+void Q(){
+    if(c=='a'){
+        c=leeSiguiente();
+        return;
+    }
+    else if(c=='s'){
+        c=leeSiguiente();
+        return;
+    }
+}
+
+void QP(){
+    if(c=='s'){
+        c=leeSiguiente();
+        return;
+    }
+    else if(c=='(' ||c=='a' ||c=='e' ||c=='r' ||c=='[' ){
+        E();
+        return;
+    }
+}
