@@ -777,6 +777,7 @@ void F(){
 void A(){
     if (c=='a'){
         c=leeSiguiente();
+        //G();
         if (c=='='){
             c=leeSiguiente();
             M();

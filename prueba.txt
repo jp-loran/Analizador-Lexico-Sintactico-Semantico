@@ -1,6 +1,35 @@
-[ void funcion()
-{
-    int a[3],b:
-    b=+cadena[1],"algo","adios":
-}
+int a, b,c[7]:
+bool perro:
+char z, x:
+float f1:
+string s:
+
+[void funcionA()
+	{
+		int d, f:
+		a = 14:
+		b = c:
+		f1 = "oso":
+
+        for[56]
+		{
+			a = a+1:
+		}
+
+        if(a>12+1)
+		{
+			switch(b)
+			{
+				case 1 [s = "perro":]
+				break:
+				default [c="gato":]
+			}
+			s = "canino":
+		}:
+
+	}
 ]
+
+
+
+
