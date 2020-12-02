@@ -573,20 +573,21 @@ void O(){
 
 void I(){
     if(c=='i'){
-        
         c=leeSiguiente();
         if (c=='(')
         {
-            
+            c=leeSiguiente();
             R();
             if (c==')')
             {
                 c=leeSiguiente();
                 if (c=='{')
                 {
+                    c=leeSiguiente();
                     B();
                     if (c=='}')
                     {
+                        c=leeSiguiente();
                         J();
                         if (c==':')
                         {
@@ -611,8 +612,10 @@ void J(){
     if (c=='l'){
         c=leeSiguiente();
         if (c=='{'){
+            c=leeSiguiente();
             B();
             if (c=='}'){
+                c=leeSiguiente();
                 return;
             }
             else error("}",c);
@@ -659,7 +662,6 @@ void R(){
 void K(){
     if (c=='!' || c=='?' || c=='>' || c=='<' || c=='y' ||c=='m'){
         c=leeSiguiente();
-        //printf("Estamos en K, caracter %c",c);
         return;
     }else error(" operador relacional",c);
 }
