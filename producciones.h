@@ -817,6 +817,7 @@ void Z(){
 void Q(){
     if(c=='a'){
         c=leeSiguiente();
+        G();
         return;
     }
     else if(c=='s'){
