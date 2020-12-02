@@ -765,12 +765,12 @@ void F(){
                     if(c==']'){
                         c=leeSiguiente();
                         return;
-                    }else error(" ]",c);
-                }else error(" )",c);
-            }else error("(",c);
-        }else error("identificador",c);
+                    }else{error(" ]",c);}
+                }else {error(" )",c);}
+            }else {error("(",c);}
+        }else {error("identificador",c);}
     }
-    else error("[",c);
+    else {error("[",c);}
 }
 
 void A(){
@@ -782,9 +782,9 @@ void A(){
             if (c==':'){
                 c=leeSiguiente();
                 return;
-            }else error(":",c);
-        }else error("=",c);
-    }else error("identificador",c);
+            }else {error(":",c);}
+        }else {error("=",c);}
+    }else {error("identificador",c);}
 }
 
 void M(){
@@ -797,7 +797,7 @@ void M(){
         Q();
         Z();
         return;
-    }else error("identificador, real, entero o cadena ( [ o +",c);
+    }else {error("identificador, real, entero o cadena ( [ o +",c);}
 }
 
 void Z(){
@@ -810,7 +810,7 @@ void Z(){
     else if (c==':'){
         return;
     }
-    else error(" , o :",c);
+    else {error(" , o :",c);}
 }
 
 void Q(){
@@ -822,7 +822,7 @@ void Q(){
         c=leeSiguiente();
         return;
     }
-    else error("identificador o cadena",c);
+    else {error("identificador o cadena",c);}
     
 }
 
@@ -835,7 +835,7 @@ void QP(){
         E();
         return;
     }
-    else error("identificador, real, entero o cadena ( [",c);
+    else {error("identificador, real, entero o cadena ( [",c);}
 }
 
 
