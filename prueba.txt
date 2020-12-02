@@ -1,6 +1,6 @@
 [ void funcion1()
 {
 int a,b:
-a=12:
+a=b:
 }
 ]
