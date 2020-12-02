@@ -387,7 +387,7 @@ constan_ente [1-9][0-9]{0,13}
 palabra_res bool|break|case|char|continue|default|do|else|float|for|if|int|return|string|switch|while|void
 identificador [A-Za-z][A-Za-z0-9_]*
 cadena \"[A-Z|.|a-z|0-9| |!|\[|\]|”|#|$|%|&|/|(|)|=|?|¡|/|*|\-|+|¬|>|<|¿|¬|°|@]*\"
-constante_real [0-9]+[.]?[0-9]+([E|e][\-+]?[0-9]+)?
+constante_real [0-9]+([.]?[0-9]+([E|e][\-+]?[0-9]+)?)?
 sim_especial \{|\}|,|:|\(|\)|\[|\]
 opera_aritme (\+)|(\*)|(-)|(\/)|(\%)
 potencia \*\*
