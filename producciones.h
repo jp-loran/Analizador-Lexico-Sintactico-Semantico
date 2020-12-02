@@ -1,12 +1,12 @@
 #include<stdio.h>
 #include<stdlib.h>
-char c;
-int n=0;
-char* arrayAtomos=NULL;
-size_t size;
+// DECLARACION DE VARIABLES GLOBALES
+char c; // almacenara el caracter de la cadena de atomos a analizar
+int n=0; // contador para ir avanzando en el array que contiene la cadena de atomos
+char* arrayAtomos=NULL; // arreglo reservado dinamicamente que almacenara la cadena de atomos  
+size_t size; // variable auxiliar que nos permite obtener el tamaño de cada elemento del array
 
-// char leeSiguiente();
-
+//DECLARACION DE FUNCIONES
 char crearArray(FILE* archAtomos);
 void P();
 void DP();
@@ -20,7 +20,22 @@ void YP();
 void VP();
 void B();
 void S();
+void U();
+void W();
+void H();
+void X();
+void O();
+void I();
 
+void N();
+void J();
+void A();
+void F();
+void R();
+
+
+//La siguiente funcion lee el archivo atomos.txt y almacena en un arreglo de caracteres los elementos del archivo
+//Devuelve el char ubicado en la primer posicion del arreglo
 char crearArray(FILE* archAtomos){
     if(archAtomos!= NULL){
             size=1;
@@ -33,15 +48,23 @@ char crearArray(FILE* archAtomos){
         for (size_t i =0; i<size-1;i++){
             arrayAtomos[i]=(char)getc(archAtomos);
         }
+        
         arrayAtomos[size-1]='\0';
     return arrayAtomos[n];
 }
 
+//Función que nos permite ir recorriendo el arreglo de atomos
 char leeSiguiente(){
     n++;
     return arrayAtomos[n];
 }
 
+void error(char* esperado,char c){
+    printf("ERROR: Se esperaba %s antes o despues del atomo %c \n",esperado,c);
+    exit(EXIT_FAILURE);
+}
+
+//CUERPO DE LAS PRODUCCIONES
 void P(){
     if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g'|| c=='[')
     {
@@ -52,7 +75,7 @@ void P(){
     }
     else
     {
-        printf("Algo esta mal en P \n");
+        error("un tipo de dato o [",c);
     }   
 }
 void DP(){
@@ -60,61 +83,63 @@ void DP(){
     {
         D();
         DP();
-        printf("Estamos en DP \n");
+        
         return;
     }else if(c=='['||c=='a'||c=='x'||c=='i'||c=='w'||c=='h'||c=='p'||c=='u'||c=='t'||c=='}')
     {
+        
         return;
     }
     else
     {
-        printf("Algo esta mal en DP \n");
+        error("una palabra reservada, un identificador, ] o }",c);
     }
 }
 void D(){
     if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g')
     {
+        
         V();
         L();
         if (c==':')
         {
             c=leeSiguiente();
-            printf("Estamos en D; siguiente caracter %c \n",c);
             return;
-        }else{printf("Algo esta mal ****** \n");}
+        }else{error(":",c);}
     
     }else
     {
-        printf("Algo esta mal en D \n");  
+        error("un tipo de dato",c);
     }
 }
 void V(){
     if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g'){
+        
         c=leeSiguiente();
-        printf("Estamos en V; siguiente caracter %c \n",c);
         return;
     }else
     {
-        printf("Algo esta mal en V \n");
+        error("un tipo de dato",c);
     }
     
 }
 void L(){
     if (c=='a')
     {
+        
         c=leeSiguiente();
-        printf("Estamos en L; siguiente caracter %c \n",c);
         G();
         C();
         return;
     }else
     {
-        printf("Algo esta mal en L \n");
+        error("un identificador",c);
     }
 }
 void G(){
     if (c=='[')
     {
+        
         c=leeSiguiente();
         if (c=='e')
         {
@@ -122,18 +147,18 @@ void G(){
             if (c==']')
             {                
                 c=leeSiguiente();
-                printf("Estamos en G; siguiente caracter %c \n",c);
                 return;
-            }else{printf("Algo esta mal \n");}
+            }else{error("]",c);}
             
-        }else{printf("Algo esta mal \n");}
+        }else{error("constante entera",c);}
         
     }else if(c==',' ||c==':' ||c==')' ||c=='*' ||c=='/' ||c=='%' ||c=='#' ||c=='+' ||c=='-' ||c=='!' ||c=='?' ||c=='<'||c=='>'||c=='y'||c=='m'){
+        
         return;
     }
     else
     {
-        printf("Algo esta mal en G\n");  
+        error("[, :, ), , , un operador aritmeico o un operador relacional",c);  
     }
     
     
@@ -141,20 +166,22 @@ void G(){
 void C(){
     if (c==',')
     {
+                
         c=leeSiguiente();
         L();
-        printf("Estamos en C \n");
         return;
     }else if(c==':'){
+        
         return;
     }else
     {
-        printf("Algo esta mal en C \n");  
+        error(" , o :",c);  
     }
 }
 void Y(){
     if (c=='[')
     {
+        
         c=leeSiguiente();
         VP();
         if (c=='a')
@@ -169,7 +196,6 @@ void Y(){
                     if (c=='{')
                     {
                         c=leeSiguiente();
-                        printf("Estamos en Y; siguiente caracter: %c \n",c);
                         DP();
                         B();
                         if (c=='}')
@@ -179,42 +205,45 @@ void Y(){
                             {
                                 c=leeSiguiente();
                                 return;
-                            }else{printf("Algo esta mal \n");}
+                            }else{error("]",c);}
                             
-                        }else{printf("Algo esta mal \n");}
+                        }else{error("}",c);}
                         
-                    }else{printf("Algo esta mal \n");}
+                    }else{error("{",c);}
                     
-                }else{printf("Algo esta mal \n");}
+                }else{error(")",c);}
                 
-            }else{printf("Algo esta mal \n");}
+            }else{error("(",c);}
             
-        }else{printf("Algo esta mal \n");}
+        }else{error("identificador",c);}
         
     }else if(c==':'){
         return;
     }else
     {
-        printf("Algo esta mal en Y \n");  
+        error(" [ o :",c);  
     }   
 }
 void YP(){
     if (c=='[')
     {
+        
         Y();
         YP();
         return;
     }else if (c=='\0' || c==']')
     {
+        
         return;
     }else
     {
-        printf("Algo esta mal en YP \n");  
+        error("[, ] o simbolo de fin de cadena",c);  
     }
 }
 void VP(){
     if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g')
     {
+                
         V();
         return;
     }else if (c=='o')
@@ -222,63 +251,66 @@ void VP(){
         c=leeSiguiente();
         return;
     }else{
-        printf("Algo esta mal en VP");
+        error("un tipo de dato",c);
     }
 }
 void B(){
     if (c=='['||c=='a'||c=='x'||c=='i'||c=='w'||c=='h'||c=='p'||c=='u'||c=='t')
     {
+        
         S();
         B();
         return;
     }
     else if(c=='}'||c==']'){
+        
         return;
     }
     else
     {
-        printf("Algo esta mal en B");
+        error("una palabra reservada, un identificador, [,] o }",c);
     }
 }
-
-
-void S(){
-    printf("estamos en S");
-    return;
-}
-/*void S(){ 
+void S(){ 
     if (c=='a')
     {
+        
         A();
         return;
     }
     else if (c=='x')
     {
+        
         X();
         return;
     }
     else if (c=='i')
     {
+        
         I();
         return;
     }
     else if(c=='w')
     {
+        
         W();
         return;
     }
     else if (c=='h')
     {
+        
         H();
         return;
     }
     else if(c=='p')
     {
+        
         N();
         return;
     }
     else if (c=='u')
     {
+        
         c=leeSiguiente();
         U();
         if (c==':')
@@ -287,9 +319,289 @@ void S(){
             return;
         }else
         {
-            printf("Algo esta mal en S :");
+            error(":",c);
         }       
         
     }
-    
-} */
+    else if (c=='t')
+    {
+        
+        c=leeSiguiente();
+        if (c==':'){
+            c==leeSiguiente();
+            return;
+        }error(":",c);
+    }
+    else if(c=='['){
+        
+        c=leeSiguiente();
+        if (c=='a')
+        {
+            c=leeSiguiente();
+            if (c=='(')
+            {
+                c=leeSiguiente();
+                if (c==')')
+                {
+                    c=leeSiguiente();
+                    if (c==']')
+                    {
+                        c=leeSiguiente();
+                        if (c==':')
+                        {
+                            c=leeSiguiente();
+                            return;
+                        }else{error(":",c);}
+                        
+                    }else{error("]",c);}
+                    
+                }else{error(")",c);}
+                
+            }else{error("(",c);}
+            
+        }else{error("identificador",c);}
+        
+    } 
+    else
+    {
+        error("un identificador, palabra reservada o [ ",c);
+    }
+      
+}
+void U(){
+    if(c==':'){
+        
+        return;
+    }
+    else if(c=='('){
+        
+        F();
+        if (c==')')
+        {
+            c=leeSiguiente();
+            return;
+        }else
+        {
+            error(")",c);
+        }
+    }
+    else
+    {
+        error(": o (",c);
+    }   
+}
+
+void W(){
+    if (c=='w')
+    {
+        
+        c=leeSiguiente();
+        if(c=='('){
+            R();
+            if (c==')')
+            {
+                c=leeSiguiente();
+                if (c=='{')
+                {
+                    B();
+                    if (c=='}')
+                    {
+                        c=leeSiguiente();
+                        return;
+                    }else{error("}",c);}
+                    
+                }else{error("{",c);}
+                
+            }else{error(")",c);}
+            
+        }else{error("(",c);}
+    }else
+    {
+        error("la palabra reservada while",c);
+    }   
+}
+
+void H(){
+    if (c=='h')
+    {
+        
+        c=leeSiguiente();
+        if (c=='{')
+        {
+            B();
+            if (c=='}')
+            {
+               c=leeSiguiente();
+               if (c=='w')
+               {
+                   c=leeSiguiente();
+                   if (c=='(')
+                   {
+                       R();
+                       if (')')
+                       {
+                           c=leeSiguiente();
+                           if (c==':')
+                           {
+                               c=leeSiguiente();
+                               return;
+                           }else{error(":",c);}
+                           
+                       }else{error(")",c);}
+                       
+                   }else{error("(",c);}
+                   
+               }else{error("la palabra reservada while",c);}
+               
+            }else{error("}",c);}
+            
+        }else{error("{",c);}
+        
+    }else
+    {
+        error("la palabra reservada do",c);
+    }
+}
+
+void X(){
+    if (c=='x')
+    {
+        
+        c=leeSiguiente();
+        if (c=='(')
+        {
+            c=leeSiguiente();
+            if (c=='a')
+            {
+                c=leeSiguiente();
+                if (c=='{')
+                {
+                    O();
+                    if (c=='d')
+                    {
+                        c=leeSiguiente();
+                        if (c=='[')
+                        {
+                            B();
+                            if (c==']')
+                            {
+                                c=leeSiguiente();
+                                if (c=='}')
+                                {
+                                    c=leeSiguiente();
+                                    return;
+                                }else{error("}",c);}
+                                
+                            }else{error("]",c);}
+                            
+                        }else{error("[",c);}
+                        
+                    }else{error("la palabra reservada default",c);}
+                    
+                }else{error("{",c);}
+                
+            }else{error("un idendtificador",c);}
+            
+        }else{error("(",c);}
+        
+    }else
+    {
+        error("la palabra reservada switch",c);
+    }   
+}
+
+void O(){
+    if (c=='k')
+    {
+        
+        c=leeSiguiente();
+        if (c=='e')
+        {
+            c=leeSiguiente();
+            if (c=='[')
+            {
+                B();
+                if (c==']')
+                {
+                    c=leeSiguiente();
+                    if (c=='q')
+                    {
+                        c=leeSiguiente();
+                        if (c==':')
+                        {
+                            O();
+                            return;
+                        }else{error(":",c);}
+                        
+                    }else{error("la palabra reservada break",c);}
+                    
+                }else{error("]",c);}
+                
+                
+            }else{error("[",c);}
+            
+        }else{error("una constante numerica entera",c);}
+        
+    }
+    else if(c=='d')
+    {
+        
+        return;
+    }
+    else
+    {
+        error("la palabra reservada case o default",c);
+    }   
+}
+
+void I(){
+    if(c=='i'){
+        
+        c=leeSiguiente();
+        if (c=='(')
+        {
+            R();
+            if (c==')')
+            {
+                c=leeSiguiente();
+                if (c=='{')
+                {
+                    B();
+                    if (c=='}')
+                    {
+                        J();
+                        if (c==':')
+                        {
+                            c=leeSiguiente();
+                            return;
+                        }else{error(":",c);}
+                        
+                    }else{error("}",c);}
+                    
+                }else{error("{",c);}
+                
+            }else{error(")",c);}
+            
+        }else{error("(",c);}
+        
+    }else{
+        error("la palabra reservada if",c);
+    }
+}
+
+
+void N(){
+    printf("Estamos en N");
+}
+void J(){
+    printf("Estamos en J");
+}
+void A(){
+    printf("Estamos en A");
+}
+void F(){
+    printf("Estamos en F");
+}
+void R(){
+    printf("Estamos en R");
+}

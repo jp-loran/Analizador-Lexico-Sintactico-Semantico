@@ -1,4 +1,1 @@
- [int main(){
-
-}]
-
+float algo[int main(){}]
