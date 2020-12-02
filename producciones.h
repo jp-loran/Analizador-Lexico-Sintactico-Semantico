@@ -27,6 +27,14 @@ void R();
 void K();
 void E();
 void EP();
+void T();
+void TP();
+void F();
+void A();
+void M();
+void Z();
+void Q();
+void QP();
 
 char crearArray(FILE* archAtomos){
     if(archAtomos!= NULL){
@@ -503,4 +511,73 @@ void F(){
     }
 }
 
+void A(){
+    if (c=='a'){
+        c=leeSiguiente();
+        if (c=='='){
+            c==leeSiguiente();
+            M();
+            if (c==':'){
+                return;
+            }else{
+              printf("Algo esta mal en A \n");  
+            }
+        }else{
+            printf("Algo esta mal en A \n");
+        }
+    }else{
+        printf("Algo esta mal en A \n");
+    }
+}
 
+void M(){
+    if (c=='(' ||c=='a' ||c=='e' ||c=='r' ||c=='[' ||c=='s'){
+        QP();
+        return;
+    }
+    else if(c=='+'){
+        c=leeSiguiente();
+        Q();
+        Z();
+        return;
+    }else{
+        printf("Algo esta mal en M \n");
+    }
+}
+
+void Z(){
+    if(c==','){
+        c=leeSiguiente();
+        Q();
+        Z();
+        return;
+    }
+    else if (c==':'){
+        return;
+    }
+    else{
+        printf("Algo esta mal en Z \n");
+    }
+}
+
+void Q(){
+    if(c=='a'){
+        c=leeSiguiente();
+        return;
+    }
+    else if(c=='s'){
+        c=leeSiguiente();
+        return;
+    }
+}
+
+void QP(){
+    if(c=='s'){
+        c=leeSiguiente();
+        return;
+    }
+    else if(c=='(' ||c=='a' ||c=='e' ||c=='r' ||c=='[' ){
+        E();
+        return;
+    }
+}
