@@ -26,7 +26,20 @@ void H();
 void X();
 void O();
 void I();
-
+void J();
+void N();
+void R();
+void K();
+void E();
+void EP();
+void T();
+void TP();
+void F();
+void A();
+void M();
+void Z();
+void Q();
+void QP();
 
 
 //La siguiente funcion lee el archivo atomos.txt y almacena en un arreglo de caracteres los elementos del archivo
