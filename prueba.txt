@@ -1,1 +1,6 @@
-float algo[int main(){}]
+[ void funcion()
+{
+    int a,b:
+    a = b:
+}
+]

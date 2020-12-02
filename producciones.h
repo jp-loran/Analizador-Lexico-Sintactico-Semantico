@@ -629,12 +629,12 @@ void N(){
                         if (c=='}'){
                             c=leeSiguiente();
                             return;
-                        }else error("Se espera }",c);
-                    }else error("Se espera {",c);
-                }else error("Se espera ]",c);
-            }else error("Se espera entero",c);
-        }else error("Se espera [",c);
-    }else error("Se espera for",c);
+                        }else error(" }",c);
+                    }else error(" {",c);
+                }else error(" ]",c);
+            }else error(" entero",c);
+        }else error(" [",c);
+    }else error(" for",c);
 }
 
 void R(){
@@ -643,7 +643,7 @@ void R(){
         K();
         E();
         return;
-    }else error("Se espera ( o [ o identificador,entero o real",c);
+    }else error(" ( o [ o identificador,entero o real",c);
 }
 
 void K(){
@@ -651,7 +651,7 @@ void K(){
         c=leeSiguiente();
         //printf("Estamos en K, caracter %c",c);
         return;
-    }else error("Se espera operador relacional",c);
+    }else error(" operador relacional",c);
 }
 
 void E(){
@@ -659,7 +659,7 @@ void E(){
         T();
         EP();
         return;
-    }else error("Se espera identificador, real, entero o ( [",c);
+    }else error("identificador, real, entero o ( [",c);
 
 }
 
@@ -677,7 +677,7 @@ void EP(){
     }
     else if (c==')' || c=='!' || c=='?' || c=='>'|| c=='<'|| c=='y'|| c=='m'|| c==':'){
         return;
-    }else error("Se espera un operador o fin de linea",c);
+    }else error("operador o fin de linea",c);
 }
 
 void T(){
@@ -685,7 +685,7 @@ void T(){
         F();
         TP();
         return;
-    }else error("Se espera identificador, real, entero o ( [",c);
+    }else error("identificador, real, entero o ( [",c);
 
 }
 
@@ -717,7 +717,7 @@ void TP(){
     else if(c=='+' ||c=='-' ||c==')' ||c=='!' ||c=='?' ||c=='>' ||c=='<' ||c=='y' ||c=='m' ||c==':' ){
         return;
     }
-    else error("Se espera operador aritmetico, relacional  fin de linea",c);
+    else error("operador aritmetico, relacional  fin de linea",c);
 }
 
 void F(){
@@ -726,7 +726,7 @@ void F(){
         E();
         if(c==')'){
             return;
-        }else error("Se espera (",c);
+        }else error("(",c);
     }
     else if(c=='a'){
         c=leeSiguiente();
@@ -752,9 +752,9 @@ void F(){
                     }else error("Se espera ]",c);
                 }else error("Se espera )",c);
             }else error("(",c);
-        }else error("Se espera identificador",c);
+        }else error("identificador",c);
     }
-    else error("Se espera [",c);
+    else error("[",c);
 }
 
 void A(){
@@ -767,7 +767,7 @@ void A(){
                 return;
             }else error("Se espera :",c);
         }else error("Se espera =",c);
-    }else error("Se espera identificador",c);
+    }else error("identificador",c);
 }
 
 void M(){
@@ -780,7 +780,7 @@ void M(){
         Q();
         Z();
         return;
-    }else error("Se espera identificador, real, entero o cadena ( [ o +",c);
+    }else error("identificador, real, entero o cadena ( [ o +",c);
 }
 
 void Z(){
@@ -793,7 +793,7 @@ void Z(){
     else if (c==':'){
         return;
     }
-    else error("Se espera , o :",c);
+    else error(" , o :",c);
 }
 
 void Q(){
@@ -805,7 +805,7 @@ void Q(){
         c=leeSiguiente();
         return;
     }
-    else error("Se espera identificador o cadena",c);
+    else error("identificador o cadena",c);
     
 }
 
@@ -818,7 +818,7 @@ void QP(){
         E();
         return;
     }
-    else error("Se espera identificador, real, entero o cadena ( [",c);
+    else error("identificador, real, entero o cadena ( [",c);
 }
 
 
