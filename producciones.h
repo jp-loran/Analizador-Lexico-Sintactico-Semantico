@@ -27,11 +27,6 @@ void X();
 void O();
 void I();
 
-void N();
-void J();
-void A();
-void F();
-void R();
 
 
 //La siguiente funcion lee el archivo atomos.txt y almacena en un arreglo de caracteres los elementos del archivo
@@ -590,18 +585,3 @@ void I(){
 }
 
 
-void N(){
-    printf("Estamos en N");
-}
-void J(){
-    printf("Estamos en J");
-}
-void A(){
-    printf("Estamos en A");
-}
-void F(){
-    printf("Estamos en F");
-}
-void R(){
-    printf("Estamos en R");
-}
