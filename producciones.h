@@ -26,6 +26,7 @@ void H();
 void X();
 void O();
 void I();
+
 void J();
 void N();
 void R();
@@ -93,7 +94,7 @@ void DP(){
         DP();
         
         return;
-    }else if(c=='['||c=='a'||c=='x'||c=='i'||c=='w'||c=='h'||c=='p'||c=='u'||c=='t'||c=='}')
+    }else if(c=='['||c=='a'||c=='x'||c=='i'||c=='w'||c=='h'||c=='p'||c=='u'||c=='t')
     {
         
         return;
@@ -158,7 +159,7 @@ void G(){
                 return;
             }else{error("]",c);}
             
-        }else{error("constante entera",c);}
+        }else{error("constante entera*****",c);}
         
     }else if(c==',' ||c==':' ||c==')' ||c=='*' ||c=='/' ||c=='%' ||c=='#' ||c=='+' ||c=='-' ||c=='!' ||c=='?' ||c=='<'||c=='>'||c=='y'||c=='m'){
         
@@ -765,12 +766,12 @@ void F(){
                     if(c==']'){
                         c=leeSiguiente();
                         return;
-                    }else error(" ]",c);
-                }else error(" )",c);
-            }else error("(",c);
-        }else error("identificador",c);
+                    }else{error(" ]",c);}
+                }else {error(" )",c);}
+            }else {error("(",c);}
+        }else {error("identificador",c);}
     }
-    else error("[",c);
+    else {error("[",c);}
 }
 
 void A(){
@@ -782,9 +783,9 @@ void A(){
             if (c==':'){
                 c=leeSiguiente();
                 return;
-            }else error(":",c);
-        }else error("=",c);
-    }else error("identificador",c);
+            }else {error(":",c);}
+        }else {error("=",c);}
+    }else {error("identificador",c);}
 }
 
 void M(){
@@ -797,7 +798,7 @@ void M(){
         Q();
         Z();
         return;
-    }else error("identificador, real, entero o cadena ( [ o +",c);
+    }else {error("identificador, real, entero o cadena ( [ o +",c);}
 }
 
 void Z(){
@@ -810,19 +811,20 @@ void Z(){
     else if (c==':'){
         return;
     }
-    else error(" , o :",c);
+    else {error(" , o :",c);}
 }
 
 void Q(){
     if(c=='a'){
         c=leeSiguiente();
+        G();
         return;
     }
     else if(c=='s'){
         c=leeSiguiente();
         return;
     }
-    else error("identificador o cadena",c);
+    else {error("identificador o cadena",c);}
     
 }
 
@@ -835,7 +837,7 @@ void QP(){
         E();
         return;
     }
-    else error("identificador, real, entero o cadena ( [",c);
+    else {error("identificador, real, entero o cadena ( [",c);}
 }
 
 
