@@ -397,7 +397,110 @@ void EP(){
         T();
         EP();
         return;
+    }
+    else if (c=='-'){
+        c=leeSiguiente();
+        T();
+        EP();
+    }
+    else if (c==')' || c=='!' || c=='?' || c=='>'|| c=='<'|| c=='y'|| c=='m'|| c==':'){
+        return;
     }else{
         printf("Algo esta mal en EP \n");
     }
 }
+
+void T(){
+    if (c=='(' || c=='a' || c=='e' || c=='r' || c=='['){
+        F();
+        TP();
+        return;
+    }else{
+        printf("Algo esta mal en T \n");
+    }
+
+}
+
+void TP(){
+    if (c=='*'){
+        c=leeSiguiente();
+        F();
+        TP();
+        return;
+    }
+    else if(c=='/'){
+        c=leeSiguiente();
+        F();
+        TP();
+        return;
+    }
+    else if(c=='%'){
+        c=leeSiguiente();
+        F();
+        TP();
+        return;
+    }
+    else if(c=='#'){
+        c=leeSiguiente();
+        F();
+        TP();
+        return;
+    }
+    else if(c=='+' ||c=='-' ||c==')' ||c=='!' ||c=='?' ||c=='>' ||c=='<' ||c=='y' ||c=='m' ||c==':' ){
+        return;
+    }
+    else{
+        printf("Algo esta mal en TP \n");
+    }
+}
+
+void F(){
+    if (c=='('){
+        c=leeSiguiente();
+        E();
+        if(c==')'){
+            return;
+        }else{
+            printf("Algo esta mal en F \n");
+        }
+    }
+    else if(c=='a'){
+        c=leeSiguiente();
+        G();
+        return;
+    }
+    else if(c=='e'){
+        return;
+    }
+    else if(c=='r'){
+        return;
+    }
+    else if (c=='['){
+        c=leeSiguiente();
+        if (c=='a'){
+            c=leeSiguiente();
+            if(c=='('){
+                c=leeSiguiente();
+                if(c==')'){
+                    c=leeSiguiente();
+                    if(c==']'){
+                        return;
+                    }else{
+                        printf("Algo esta mal en F \n");
+                    }
+                }else{
+                    printf("Algo esta mal en F \n");
+                }
+            }else{
+                printf("Algo esta mal en F \n");
+            }
+        }else{
+            printf("Algo esta mal en F \n");
+        }
+    }
+    else{
+        printf("Algo esta mal en F \n");
+    }
+}
+
+
