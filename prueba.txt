@@ -1,14 +1,10 @@
 [ void funcion()
 {
     int a,b:
-    a = b:
-    do{
-        b=b:
-    }
-    while(a>5):
-
-    switch(a){
-        default [cad ="algo mas":]
-    }
+    if(a==b){
+        [printf()]:
+    }else{
+        c=1:
+    }:
 }
 ]
