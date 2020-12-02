@@ -605,19 +605,13 @@ void J(){
             if (c=='}'){
                 return;
             }
-            else{
-                printf("Algo esta mal en J \n");
-            } 
+            else error("Se espera } en lugar de:",c);
         }
-        else{
-            printf("Algo esta mal en J \n");
-        } 
+        else error("Se espera { en lugar de:",c);
     }
     else if (c==':'){
         return;
-    }else{
-        printf("Algo esta mal en J \n");
-    }
+    }else error("Se espera l",c);
 }
 
 void N(){
@@ -635,24 +629,12 @@ void N(){
                         if (c=='}'){
                             c=leeSiguiente();
                             return;
-                        }else{
-                            printf("Algo esta mal en N \n");
-                        }
-                    }else{
-                        printf("Algo esta mal en N \n");
-                    }
-                }else{
-                    printf("Algo esta mal en N \n");
-                }  
-            }else{
-                printf("Algo esta mal en N \n");
-            }
-        }else{
-            printf("Algo esta mal en N \n");
-        }  
-    }else{
-        printf("Algo esta mal en N \n");
-    }
+                        }else error("Se espera }",c);
+                    }else error("Se espera {",c);
+                }else error("Se espera ]",c);
+            }else error("Se espera e",c);
+        }else error("Se espera [",c);
+    }else error("Se espera p",c);
 }
 
 void R(){
@@ -661,19 +643,15 @@ void R(){
         K();
         E();
         return;
-    }else{
-        printf("Algo esta mal en R \n");
-    }
+    }else error("Se espera ( o [ o identificador,entero o real",c);
 }
 
 void K(){
     if (c=='!' || c=='?' || c=='>' || c=='<' || c=='y' ||c=='m'){
         c=leeSiguiente();
-        printf("Estamos en K, caracter %c",c);
+        //printf("Estamos en K, caracter %c",c);
         return;
-    }else{
-        printf("Algo esta mal en K \n");
-    }
+    }else error("Se espera operador relacional",c);
 }
 
 void E(){
@@ -681,9 +659,7 @@ void E(){
         T();
         EP();
         return;
-    }else{
-        printf("Algo esta mal en E \n");
-    }
+    }else error("Se espera identificador, real, entero o ( [",c);
 
 }
 
@@ -701,9 +677,7 @@ void EP(){
     }
     else if (c==')' || c=='!' || c=='?' || c=='>'|| c=='<'|| c=='y'|| c=='m'|| c==':'){
         return;
-    }else{
-        printf("Algo esta mal en EP \n");
-    }
+    }else error("Se espera un operador o fin de linea",c);
 }
 
 void T(){
@@ -711,9 +685,7 @@ void T(){
         F();
         TP();
         return;
-    }else{
-        printf("Algo esta mal en T \n");
-    }
+    }else error("Se espera identificador, real, entero o ( [",c);
 
 }
 
@@ -745,9 +717,7 @@ void TP(){
     else if(c=='+' ||c=='-' ||c==')' ||c=='!' ||c=='?' ||c=='>' ||c=='<' ||c=='y' ||c=='m' ||c==':' ){
         return;
     }
-    else{
-        printf("Algo esta mal en TP \n");
-    }
+    else error("Se espera operador aritmetico, relacional  fin de linea",c);
 }
 
 void F(){
@@ -756,9 +726,7 @@ void F(){
         E();
         if(c==')'){
             return;
-        }else{
-            printf("Algo esta mal en F \n");
-        }
+        }else error("Se espera (",c);
     }
     else if(c=='a'){
         c=leeSiguiente();
@@ -781,22 +749,12 @@ void F(){
                     c=leeSiguiente();
                     if(c==']'){
                         return;
-                    }else{
-                        printf("Algo esta mal en F \n");
-                    }
-                }else{
-                    printf("Algo esta mal en F \n");
-                }
-            }else{
-                printf("Algo esta mal en F \n");
-            }
-        }else{
-            printf("Algo esta mal en F \n");
-        }
+                    }else error("Se espera ]",c);
+                }else error("Se espera )",c);
+            }else error("(",c);
+        }else error("Se espera identificador",c);
     }
-    else{
-        printf("Algo esta mal en F \n");
-    }
+    else error("Se espera [",c);
 }
 
 void A(){
@@ -807,15 +765,9 @@ void A(){
             M();
             if (c==':'){
                 return;
-            }else{
-              printf("Algo esta mal en A \n");  
-            }
-        }else{
-            printf("Algo esta mal en A \n");
-        }
-    }else{
-        printf("Algo esta mal en A \n");
-    }
+            }else error("Se espera :",c);
+        }else error("Se espera =",c);
+    }else error("Se espera identificador",c);
 }
 
 void M(){
@@ -828,9 +780,7 @@ void M(){
         Q();
         Z();
         return;
-    }else{
-        printf("Algo esta mal en M \n");
-    }
+    }else error("Se espera identificador, real, entero o string ( [ o +",c);
 }
 
 void Z(){
@@ -843,9 +793,7 @@ void Z(){
     else if (c==':'){
         return;
     }
-    else{
-        printf("Algo esta mal en Z \n");
-    }
+    else error("Se espera , o :",c);
 }
 
 void Q(){
@@ -857,6 +805,8 @@ void Q(){
         c=leeSiguiente();
         return;
     }
+    else error("Se espera identificador o cadena",c);
+    
 }
 
 void QP(){
@@ -868,6 +818,7 @@ void QP(){
         E();
         return;
     }
+    else error("Se espera identificador, real, entero o cadena ( [",c);
 }
 
 
