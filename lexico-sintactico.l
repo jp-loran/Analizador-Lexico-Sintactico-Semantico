@@ -329,6 +329,7 @@ listaTokens crear_lista_tokens(){
 
 /*Función para mostrar los tokens en un archivo*/
 void mostrar_lista_tokens(FILE *archivo, listaTokens lista){
+    int visitado=0;
     fprintf(archivo, "--|Lista de tokens|--\n");
     if (lista.primerToken==NULL){
         fprintf(archivo, "Lista de tokens vacía");
@@ -341,8 +342,16 @@ void mostrar_lista_tokens(FILE *archivo, listaTokens lista){
             {
             fprintf(archivo, "(%d\t,\t%c)\n", actual->clase,(char)actual->posicion);            
             }
+            else if(actual->clase==3 && actual->posicion==0){
+                visitado=1;
+                fprintf(archivo, "(%d\t,\t%d)\n", actual->clase,actual->posicion);
+            }
+            else if(actual->clase==3 && actual->posicion==-1 && visitado==1){
+                actual->posicion+=1;
+                fprintf(archivo, "(%d\t,\t%d)\n", actual->clase,actual->posicion);
+            }
             else{
-            fprintf(archivo, "(%d\t,\t%d)\n", actual->clase,actual->posicion);            
+                fprintf(archivo, "(%d\t,\t%d)\n", actual->clase,actual->posicion);            
             }
             actual=actual->siguienteToken;
         }  
@@ -387,7 +396,7 @@ constan_ente [1-9][0-9]{0,13}
 palabra_res bool|break|case|char|continue|default|do|else|float|for|if|int|return|string|switch|while|void
 identificador [A-Za-z][A-Za-z0-9_]*
 cadena \"[A-Z|.|a-z|0-9| |!|\[|\]|”|#|$|%|&|/|(|)|=|?|¡|/|*|\-|+|¬|>|<|¿|¬|°|@]*\"
-constante_real [0-9]+[.]?[0-9]+([E|e][\-+]?[0-9]+)?
+constante_real [0-9]+([.]?[0-9]+([E|e][\-+]?[0-9]+)?)?
 sim_especial \{|\}|,|:|\(|\)|\[|\]
 opera_aritme (\+)|(\*)|(-)|(\/)|(\%)
 potencia \*\*
@@ -529,7 +538,7 @@ int main(int argc, char *argv[]){
     if(c=='\0'){
         printf("Analisis léxico concluido sin errores \n");
     }else{
-        printf("Se encontraron errores \n");
+        printf("Se encontraron errores durante el análsis léxico \n");
     }
     return 0;
 }

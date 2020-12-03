@@ -2,7 +2,7 @@ int a, b,c[7]:
 bool perro:
 char z, x:
 float f1:
-string s:
+string cadena[4],cad:
 
 [void funcionA()
 	{
@@ -10,26 +10,39 @@ string s:
 		a = 14:
 		b = c:
 		f1 = "oso":
-
-        for[56]
+		c[1]=a*(b+d)/z**x%s:
+		for[56]
 		{
 			a = a+1:
 		}
-
-        if(a>12+1)
+		if(a>12+1)
 		{
 			switch(b)
 			{
 				case 1 [s = "perro":]
 				break:
-				default [c="gato":]
+				default [c[2]=+"oso","gato":]
 			}
 			s = "canino":
+		}
+		else
+		{
+			while(c < 9)
+			{
+				perro = 0:
+			}
 		}:
-
+		do {
+			f1 = "gato":
+		} while (perro == 1):
 	}
 ]
 
-
-
-
+[int funcion2()
+	{
+		int hola:
+		string cadena:
+		hola = 2.54E-5:
+		cadena = "no":
+	}
+]
