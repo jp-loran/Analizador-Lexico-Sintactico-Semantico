@@ -4,10 +4,10 @@ Autores: Juan Pablo Alvarez Loran
          Carlos Tovar Herrera
 Descripción: Este programa reconoce las clases de componentes léxicos definidos dentro de la clase.
              Los resultados se almacenan en distintos archivos de salida.
-Fecha de elaboración: 25 de Octubre de 2020
-Fecha de entrega: 29 de Octubre de 2020
+Fecha de elaboración: 27 de Noviembre de 2020
+Fecha de entrega: 3 de Diciembre de 2020
 Instrucciones de ejecucion
-        $flex analizador.l
+        $flex lexico-sintactico.l
         $gcc lex.yy.c -lfl
         $./a.out nombre_archivo.txt  
 */
