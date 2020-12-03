@@ -1,48 +1,37 @@
-int a, b,c[7]:
-bool perro:
-char z, x:
-float f1:
-string cadena[4],cad:
+int a[3],b,d:
+bool c:
+char x,y,z:
+float r1,h[5]:
+string cadena[4], cad:
 
-[void funcionA()
-	{
-		int d, f:
-		a = 14:
-		b = c:
-		f1 = "oso":
-		c[1]=a*(b+d)/z**x%s:
-		for[56]
-		{
-			a = a+1:
-		}
-		if(a>12+1)
-		{
-			switch(b)
-			{
-				case 1 [s = "perro":]
-				break:
-				default [c[2]=+"oso","gato":]
-			}
-			s = "canino":
-		}
-		else
-		{
-			while(c < 9)
-			{
-				perro = 0:
-			}
-		}:
-		do {
-			f1 = "gato":
-		} while (perro == 1):
-	}
-]
+[int main(){
 
-[int funcion2()
-	{
-		int hola:
-		string cadena:
-		hola = 2.54E-5:
-		cadena = "no":
+	cadena[4]="Hola profesora":
+	b=2*c/3**5:
+
+	while(b<=20){
+		x=y:
 	}
-]
+
+	do{
+		f1 = "gato":
+	} while (perro == 1):
+
+
+	if(c==1){
+		for[9]{
+			y=5:
+		}
+	}:
+
+}]
+
+[float funcionSwitch(){
+	switch(z){
+		case 1 [cad=+ cadena[1], “uno”, “otracadena”:]
+		break:
+		case 2 [cadena[4]="Opcion 2":]
+		break:		
+		default [cadena[4]="Error":]
+	}
+}]
