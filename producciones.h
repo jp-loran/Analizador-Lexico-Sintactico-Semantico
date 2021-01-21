@@ -272,7 +272,6 @@ void B(){
         return;
     }
     else if(c=='}'||c==']'){
-        
         return;
     }
     else
@@ -334,10 +333,9 @@ void S(){
     }
     else if (c=='t')
     {
-        
         c=leeSiguiente();
         if (c==':'){
-            c==leeSiguiente();
+            c=leeSiguiente();
             return;
         }error(":",c);
     }
@@ -738,7 +736,7 @@ void F(){
         c=leeSiguiente();
         E();
         if(c==')'){
-            c=leeSiguiente();
+            //c=leeSiguiente();
             return;
         }else error("(",c);
     }
@@ -840,5 +838,5 @@ void QP(){
     }
     else {error("identificador, real, entero o cadena ( [",c);}
 }
-
+ 
 

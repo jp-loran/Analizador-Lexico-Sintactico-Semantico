@@ -1,37 +1,13 @@
-int a[3],b,d:
-bool c:
-char x,y,z:
-float r1,h[5]:
-string cadena[4], cad:
-
 [int main(){
-
-	cadena[4]="Hola profesora":
-	b=2*c/3**5:
-
-	while(b<=20){
-		x=y:
-	}
-
-	do{
-		f1 = "gato":
-	} while (perro == 1):
-
-
-	if(c==1){
-		for[9]{
-			y=5:
-		}
+@ If anidado (and)
+	if (c1 >= 64.2E5){
+		if (c2 < ([len()] * 43.5)){
+			a=a*1:
+		} 
 	}:
+	
+	
+ }
 
 }]
 
-[float funcionSwitch(){
-	switch(z){
-		case 1 [cad=+ cadena[1], “uno”, “otracadena”:]
-		break:
-		case 2 [cadena[4]="Opcion 2":]
-		break:		
-		default [cadena[4]="Error":]
-	}
-}]
