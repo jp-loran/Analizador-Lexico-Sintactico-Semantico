@@ -26,7 +26,6 @@ void H();
 void X();
 void O();
 void I();
-
 void J();
 void N();
 void R();
@@ -381,7 +380,7 @@ void U(){
         return;
     }
     else if(c=='('){
-        
+        c=leeSiguiente();
         F();
         if (c==')')
         {
@@ -736,7 +735,7 @@ void F(){
         c=leeSiguiente();
         E();
         if(c==')'){
-            //c=leeSiguiente();
+            c=leeSiguiente();
             return;
         }else error("(",c);
     }
