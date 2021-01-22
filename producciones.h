@@ -6,18 +6,26 @@ int n=0; // contador para ir avanzando en el array que contiene la cadena de ato
 char* arrayAtomos=NULL; // arreglo reservado dinamicamente que almacenara la cadena de atomos  
 size_t size; // variable auxiliar que nos permite obtener el tamaño de cada elemento del array
 
+int* arrayValores=NULL;
+size_t size1=1;
+int v=0;
+int tipo;
+int token;
+int pos;
+
+
 //DECLARACION DE FUNCIONES
 char crearArray(FILE* archAtomos);
 void P();
 void DP();
 void Y();
 void D();
-void V();
-void L();
+int V();
+void L(int tipo);
 void G();
 void C();
 void YP();
-void VP();
+int VP();
 void B();
 void S();
 void U();
@@ -72,6 +80,15 @@ void error(char* esperado,char c){
     exit(EXIT_FAILURE);
 }
 
+int siguienteValor(){
+    v++;
+    return arrayValores[v-1];
+}
+
+void asignaTipo(int tipo, int posicion){
+    printf("(%d,%d) \n",tipo,posicion);
+}
+
 //CUERPO DE LAS PRODUCCIONES
 void P(){
     if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g'|| c=='[')
@@ -107,8 +124,8 @@ void D(){
     if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g')
     {
         
-        V();
-        L();
+        tipo=V();
+        L(tipo);
         if (c==':')
         {
             c=leeSiguiente();
@@ -120,21 +137,24 @@ void D(){
         error("un tipo de dato",c);
     }
 }
-void V(){
+int V(){
     if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g'){
-        
+        tipo=siguienteValor();
         c=leeSiguiente();
-        return;
+        //token=siguienteValor();
+        //return;
     }else
     {
         error("un tipo de dato",c);
     }
+    return tipo;
     
 }
-void L(){
+void L(int tipo){
     if (c=='a')
     {
-        
+        pos=siguienteValor();
+        asignaTipo(tipo,pos);
         c=leeSiguiente();
         G();
         C();
@@ -143,6 +163,8 @@ void L(){
     {
         error("un identificador",c);
     }
+    
+   
 }
 void G(){
     if (c=='[')
@@ -158,10 +180,10 @@ void G(){
                 return;
             }else{error("]",c);}
             
-        }else{error("constante entera*****",c);}
+        }else{error("constante entera",c);}
         
     }else if(c==',' ||c==':' ||c==')' ||c=='*' ||c=='/' ||c=='%' ||c=='#' ||c=='+' ||c=='-' ||c=='!' ||c=='?' ||c=='<'||c=='>'||c=='y'||c=='m'||c=='='){
-        
+        token=siguienteValor();
         return;
     }
     else
@@ -174,12 +196,11 @@ void G(){
 void C(){
     if (c==',')
     {
-                
         c=leeSiguiente();
-        L();
+        L(tipo);
         return;
     }else if(c==':'){
-        
+        token=siguienteValor();
         return;
     }else
     {
@@ -188,13 +209,15 @@ void C(){
 }
 void Y(){
     if (c=='[')
-    {
-        
+    {   
         c=leeSiguiente();
-        VP();
+        tipo=VP();
         if (c=='a')
-        {
+        {   
+            pos=siguienteValor();
+            asignaTipo(tipo,pos);
             c=leeSiguiente();
+                        
             if (c=='(')
             {
                 c=leeSiguiente();
@@ -226,6 +249,7 @@ void Y(){
         }else{error("identificador",c);}
         
     }else if(c==':'){
+        token=siguienteValor();
         return;
     }else
     {
@@ -248,16 +272,17 @@ void YP(){
         error("[, ] o simbolo de fin de cadena",c);  
     }
 }
-void VP(){
+int VP(){
     if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g')
     {
                 
-        V();
-        return;
+        tipo=V();
+        return tipo;
     }else if (c=='o')
     {
         c=leeSiguiente();
-        return;
+        token=siguienteValor();
+        return tipo;
     }else{
         error("un tipo de dato",c);
     }
@@ -396,7 +421,6 @@ void U(){
         error(": o (",c);
     }   
 }
-
 void W(){
     if (c=='w')
     {        
@@ -427,7 +451,6 @@ void W(){
         error("la palabra reservada while",c);
     }   
 }
-
 void H(){
     if (c=='h')
     {
@@ -471,7 +494,6 @@ void H(){
         error("la palabra reservada do",c);
     }
 }
-
 void X(){
     if (c=='x')
     {
@@ -524,7 +546,6 @@ void X(){
         error("la palabra reservada switch",c);
     }   
 }
-
 void O(){
     if (c=='k')
     {
@@ -568,7 +589,6 @@ void O(){
         error("la palabra reservada case o default",c);
     }   
 }
-
 void I(){
     if(c=='i'){
         c=leeSiguiente();
@@ -605,7 +625,6 @@ void I(){
         error("la palabra reservada if",c);
     }
 }
-
 void J(){
     if (c=='l'){
         c=leeSiguiente();
@@ -624,7 +643,6 @@ void J(){
         return;
     }else error("else",c);
 }
-
 void N(){
     if (c=='p'){
         c=leeSiguiente();
@@ -647,7 +665,6 @@ void N(){
         }else error(" [",c);
     }else error(" for",c);
 }
-
 void R(){
     if (c=='(' || c=='a' ||c=='e' || c=='r' || c=='[' ){
         E();
@@ -656,14 +673,12 @@ void R(){
         return;
     }else error(" ( o [ o identificador,entero o real",c);
 }
-
 void K(){
     if (c=='!' || c=='?' || c=='>' || c=='<' || c=='y' ||c=='m'){
         c=leeSiguiente();
         return;
     }else error(" operador relacional",c);
 }
-
 void E(){
     if (c=='(' || c=='a' || c=='e' || c=='r' || c=='['){
         T();
@@ -672,7 +687,6 @@ void E(){
     }else error("identificador, real, entero o ( [",c);
 
 }
-
 void EP(){
     if (c=='+'){
         c=leeSiguiente();
@@ -689,7 +703,6 @@ void EP(){
         return;
     }else error("operador o fin de linea",c);
 }
-
 void T(){
     if (c=='(' || c=='a' || c=='e' || c=='r' || c=='['){
         F();
@@ -698,7 +711,6 @@ void T(){
     }else error("identificador, real, entero o ( [",c);
 
 }
-
 void TP(){
     if (c=='*'){
         c=leeSiguiente();
@@ -729,7 +741,6 @@ void TP(){
     }
     else error("operador aritmetico, relacional  fin de linea",c);
 }
-
 void F(){
     if (c=='('){
         c=leeSiguiente();
@@ -770,7 +781,6 @@ void F(){
     }
     else {error("[",c);}
 }
-
 void A(){
     if (c=='a'){
         c=leeSiguiente();
@@ -785,7 +795,6 @@ void A(){
         }else {error("=",c);}
     }else {error("identificador",c);}
 }
-
 void M(){
     if (c=='(' ||c=='a' ||c=='e' ||c=='r' ||c=='[' ||c=='s'){
         QP();
@@ -798,7 +807,6 @@ void M(){
         return;
     }else {error("identificador, real, entero o cadena ( [ o +",c);}
 }
-
 void Z(){
     if(c==','){
         c=leeSiguiente();
@@ -811,7 +819,6 @@ void Z(){
     }
     else {error(" , o :",c);}
 }
-
 void Q(){
     if(c=='a'){
         c=leeSiguiente();
@@ -825,7 +832,6 @@ void Q(){
     else {error("identificador o cadena",c);}
     
 }
-
 void QP(){
     if(c=='s'){
         c=leeSiguiente();

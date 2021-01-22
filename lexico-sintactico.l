@@ -383,6 +383,31 @@ void agregar_token(listaTokens *lista, int clase, int posicion){
     }   
 }
 
+
+int crearArrayValores(listaTokens lista){
+    Token *actual= lista.primerToken;
+    int i=0;
+    int valor;
+        while (actual != 0)
+        {
+            size1++;
+            actual=actual->siguienteToken;
+        }
+        arrayValores=(int*)malloc(sizeof(int)*size1);
+        actual= lista.primerToken;
+        while(actual != 0){
+            valor=(int)actual->posicion;
+            arrayValores[i]=valor;
+            printf("%d \n",arrayValores[i]);
+            i++;
+            actual=actual->siguienteToken;
+        }
+    return arrayValores[v];
+}
+
+
+
+
 listaTokens crear_lista_tokens();
 void mostrar_lista_tokens(FILE *archivo, listaTokens lista);
 void agregar_token(listaTokens *lista, int clase, int posicion);
@@ -521,12 +546,13 @@ int main(int argc, char *argv[]){
     mostrar_tabla_constantes(archTablas, tabla_constantes_reales);
     mostrar_lista_tokens(archTokens, lista_tokens);
 
+    tipo=crearArrayValores(lista_tokens);
+
     fclose(archAtomos);
     fclose(archTablas);
     fclose(archSal);
     fclose(archTokens);
     fclose(archError);
-
 
     archAtomos = fopen("atomos.txt","r");
     

@@ -1,4 +1,4 @@
-bool c:
+bool c,d:
 
 [ int dos() {
 	return (2):
