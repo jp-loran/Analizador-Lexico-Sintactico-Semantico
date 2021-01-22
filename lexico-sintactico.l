@@ -428,7 +428,7 @@ potencia \*\*
 asignacion =
 opera_rela (<=)|(>=)|(<)|(!=)|(>)|(==)
 comentario @[\"A-Z|.|a-z|0-9| |!|\[|\]|”|#|$|%|&|/|(|)|=|?|¡|/|*|\-|+|¬|>|<|¿|¬|°|@\"]*
-error [^constan_entepalabra_residentificadorconstante_realsim_especialopera_aritmepotenciaasignacionopera_relacomentario \n]
+error [^constan_entepalabra_residentificadorconstante_realsim_especialopera_aritmepotenciaasignacionopera_relacomentario \t\n]
 %%
 {comentario} {
             fprintf(archSal,"%s Es un comentario, por lo tanto se descarta\n",yytext);
