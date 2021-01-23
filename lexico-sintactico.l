@@ -87,12 +87,13 @@ void mostrar_tabla_simbolos(FILE *archivo,listaSimbolos lista){
         fprintf(archivo,"Tabla de simbolos vacia");
     else{
         tablaSimbolos *actual=lista.primerRegistro;
+        fprintf(archivo,"\n\n");
         fprintf(archivo," TABLA DE SIMBOLOS\n");
         fprintf(archivo," _________________________________________\n");
 	    fprintf(archivo,"|Posicion|     Nombre      |     Tipo    | \n");
         fprintf(archivo," -----------------------------------------\n");
         while(actual !=0){
-            fprintf(archivo,"\t%d \t\t%s\t\t%d \n",actual->pos,actual->nombre,actual->tipo);
+            fprintf(archivo,"\t%d\t\t\t%s\t\t\t%d\n",actual->pos,actual->nombre,actual->tipo);
             actual=actual->siguienteRegistro;
         }
     }
@@ -399,7 +400,6 @@ int crearArrayValores(listaTokens lista){
         while(actual != 0){
             valor=(int)actual->posicion;
             arrayValores[i]=valor;
-            printf("%d \n",arrayValores[i]);
             i++;
             actual=actual->siguienteToken;
         }
@@ -407,15 +407,6 @@ int crearArrayValores(listaTokens lista){
 }
 
 
-
-
-listaTokens crear_lista_tokens();
-void mostrar_lista_tokens(FILE *archivo, listaTokens lista);
-void agregar_token(listaTokens *lista, int clase, int posicion);
-//listaSimbolos tabla_simbolos;
-listaLiterales tabla_literales;
-listaConstantes tabla_constantes_reales;
-listaTokens lista_tokens;
 %}
 constan_ente [1-9][0-9]{0,13}
 palabra_res bool|break|case|char|continue|default|do|else|float|for|if|int|return|string|switch|while|void
@@ -539,8 +530,6 @@ int main(int argc, char *argv[]){
     tabla_literales=crear_tabla_literales();
     yylex();
 
-    //mostrar_tabla_simbolos(archTablas,tabla_simbolos);
-    //fprintf(archTablas,"\n\n");
     mostrar_tabla_literales(archTablas, tabla_literales);
     fprintf(archTablas,"\n\n");
     mostrar_tabla_constantes(archTablas, tabla_constantes_reales);
