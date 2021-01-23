@@ -1,7 +1,30 @@
-bool c,d:
 
+@ Variables globales
+int a,b,d:
+bool c:
+char x,y,z:
+float r1,h,E,M:
+string cad, cad1, cad2:
+
+@ Sentencia return
+[ int dos() {
+	char f:
+	float a:
+	return (flag):
+ }
+]
+
+@ Sentencia return
 [ int dos() {
 	return (2):
  }
 ]
-
+[ bool band() {
+	@ Constante caracter y valores booleanos
+	char c1,c2:
+	bool flag:
+	c1 = 65: @se daran como ASCII
+	flag = 0: @ valor de 0 (false) y 1 (true)
+	return (flag):
+ }
+]

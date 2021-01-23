@@ -11,7 +11,7 @@ Instrucciones de ejecucion
         $gcc lex.yy.c -lfl
         $./a.out nombre_archivo.txt  
 */
-#include "producciones.h"
+//#include "producciones.h"
 
 FILE *archSal, *archTablas, *archTokens, *archError;
 FILE *archAtomos;
@@ -383,6 +383,7 @@ void agregar_token(listaTokens *lista, int clase, int posicion){
     }   
 }
 
+#include "producciones.h"
 
 int crearArrayValores(listaTokens lista){
     Token *actual= lista.primerToken;
@@ -411,8 +412,7 @@ int crearArrayValores(listaTokens lista){
 listaTokens crear_lista_tokens();
 void mostrar_lista_tokens(FILE *archivo, listaTokens lista);
 void agregar_token(listaTokens *lista, int clase, int posicion);
-
-listaSimbolos tabla_simbolos;
+//listaSimbolos tabla_simbolos;
 listaLiterales tabla_literales;
 listaConstantes tabla_constantes_reales;
 listaTokens lista_tokens;
@@ -539,8 +539,8 @@ int main(int argc, char *argv[]){
     tabla_literales=crear_tabla_literales();
     yylex();
 
-    mostrar_tabla_simbolos(archTablas,tabla_simbolos);
-    fprintf(archTablas,"\n\n");
+    //mostrar_tabla_simbolos(archTablas,tabla_simbolos);
+    //fprintf(archTablas,"\n\n");
     mostrar_tabla_literales(archTablas, tabla_literales);
     fprintf(archTablas,"\n\n");
     mostrar_tabla_constantes(archTablas, tabla_constantes_reales);
@@ -549,7 +549,6 @@ int main(int argc, char *argv[]){
     tipo=crearArrayValores(lista_tokens);
 
     fclose(archAtomos);
-    fclose(archTablas);
     fclose(archSal);
     fclose(archTokens);
     fclose(archError);
@@ -561,11 +560,17 @@ int main(int argc, char *argv[]){
     fclose(archAtomos);
 
     P();
+    revisaNoDeclarada();
     if(c=='\0'){
-        printf("Analisis léxico concluido sin errores \n");
+        printf("Analisis léxico y sintáctico concluido sin errores \n");
     }else{
         printf("Se encontraron errores durante el análsis léxico \n");
     }
+
+    mostrar_tabla_simbolos(archTablas,tabla_simbolos);
+    fprintf(archTablas,"\n\n");
+    fclose(archTablas);
+
     return 0;
 }
 

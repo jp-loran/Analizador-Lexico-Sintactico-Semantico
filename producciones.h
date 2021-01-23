@@ -14,6 +14,11 @@ int token;
 int pos;
 
 
+int visitado;
+
+listaSimbolos tabla_simbolos;
+
+
 //DECLARACION DE FUNCIONES
 char crearArray(FILE* archAtomos);
 void P();
@@ -48,6 +53,7 @@ void M();
 void Z();
 void Q();
 void QP();
+
 
 
 //La siguiente funcion lee el archivo atomos.txt y almacena en un arreglo de caracteres los elementos del archivo
@@ -86,7 +92,28 @@ int siguienteValor(){
 }
 
 void asignaTipo(int tipo, int posicion){
+    tablaSimbolos *actual=tabla_simbolos.primerRegistro;
+    while(actual !=0){
+        if(actual->pos==posicion && actual->tipo!=-1){
+            printf("Variable '%s' ya declarada \n",actual->nombre);
+        }
+        else if (actual->pos==posicion && actual->tipo==-1){
+            actual->tipo=tipo;
+        }
+        actual=actual->siguienteRegistro;
+    }
     printf("(%d,%d) \n",tipo,posicion);
+}
+
+void revisaNoDeclarada(){
+    tablaSimbolos *actual=tabla_simbolos.primerRegistro;
+    while(actual !=0){
+        if(actual->tipo==-1){
+            printf("ERROR:Variable '%s' no se ha declarado \n",actual->nombre);
+        }
+        actual=actual->siguienteRegistro;
+    }
+
 }
 
 //CUERPO DE LAS PRODUCCIONES
@@ -112,7 +139,7 @@ void DP(){
         return;
     }else if(c=='['||c=='a'||c=='x'||c=='i'||c=='w'||c=='h'||c=='p'||c=='u'||c=='t')
     {
-        
+        token=siguienteValor();
         return;
     }
     else
@@ -128,6 +155,7 @@ void D(){
         L(tipo);
         if (c==':')
         {
+            //token=siguienteValor();
             c=leeSiguiente();
             return;
         }else{error(":",c);}
@@ -200,7 +228,7 @@ void C(){
         L(tipo);
         return;
     }else if(c==':'){
-        token=siguienteValor();
+        //token=siguienteValor();
         return;
     }else
     {
@@ -212,23 +240,27 @@ void Y(){
     {   
         c=leeSiguiente();
         tipo=VP();
+
         if (c=='a')
         {   
             pos=siguienteValor();
             asignaTipo(tipo,pos);
             c=leeSiguiente();
-                        
+            token=siguienteValor();
             if (c=='(')
             {
                 c=leeSiguiente();
+                token=siguienteValor();
                 if (c==')')
                 {
+                    token=siguienteValor();
                     c=leeSiguiente();
                     if (c=='{')
                     {
                         c=leeSiguiente();
                         DP();
                         B();
+                        token=siguienteValor();
                         if (c=='}')
                         {
                             c=leeSiguiente();
@@ -259,13 +291,11 @@ void Y(){
 void YP(){
     if (c=='[')
     {
-        
         Y();
         YP();
         return;
     }else if (c=='\0' || c==']')
-    {
-        
+    {    
         return;
     }else
     {
@@ -277,11 +307,15 @@ int VP(){
     {
                 
         tipo=V();
+        //token=siguienteValor();
+        //printf("________%d_______\n",token);
         return tipo;
     }else if (c=='o')
     {
-        c=leeSiguiente();
-        token=siguienteValor();
+        //token=siguienteValor();
+        //printf("token::: %d \n",token);
+        tipo=siguienteValor();
+        c=leeSiguiente();        
         return tipo;
     }else{
         error("un tipo de dato",c);
@@ -292,10 +326,13 @@ void B(){
     {
         
         S();
+        token=siguienteValor();
         B();
+        token=siguienteValor();
         return;
     }
     else if(c=='}'||c==']'){
+        token=siguienteValor();
         return;
     }
     else
@@ -344,10 +381,14 @@ void S(){
     {
         
         c=leeSiguiente();
+        printf("%c\n",token);
+        printf("*%c\n",c);
         U();
         if (c==':')
         {
             c=leeSiguiente();
+                    printf("%c\n",token);
+        printf("*%c\n",c);
             return;
         }else
         {
@@ -401,15 +442,27 @@ void S(){
 }
 void U(){
     if(c==':'){
-        
         return;
     }
     else if(c=='('){
+        printf("%c\n",token);
+        token=siguienteValor();
+        printf("%c\n",token);
+        printf("*%c\n",c);
         c=leeSiguiente();
+        printf("*%c\n",c);
         F();
+        printf("*%c\n",c);
+        printf("%c\n",token);
+        token=siguienteValor();
+        printf("%c\n",token);
         if (c==')')
         {
+            
+            token=siguienteValor();
+            printf("%c\n",token);
             c=leeSiguiente();
+            printf("*%c\n",c);
             return;
         }else
         {
