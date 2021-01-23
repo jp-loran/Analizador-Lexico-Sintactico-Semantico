@@ -18,6 +18,7 @@ FILE *archAtomos;
 
 int valor;
 int obtenerASCII(char *caracter);
+char *definiciones;
 
 //Estructura para definir Palabras reservadas {valor palabra}
 struct palabraS{
@@ -118,7 +119,7 @@ int buscar_registro_simbolo(listaSimbolos *lista, char* nombre){
             return posicion;
             }
         }
-        return -1;
+        return -1;  
     }
     
 }
@@ -405,10 +406,30 @@ int crearArrayValores(listaTokens lista){
     return arrayValores[v];
 }
 
-
-
+int buscar_simbolo_rep(listaSimbolos *lista, char* nombre){
+    if(lista->primerRegistro==NULL){
+        return -1;
+    }
+    else
+    {
+        tablaSimbolos *actual = lista->primerRegistro;
+        if(!strcmp(actual->nombre, nombre)){
+            return 0;
+        }
+        while (actual->siguienteRegistro != 0)
+        {
+            actual=actual->siguienteRegistro;
+            if(!strcmp(actual->nombre, nombre)){
+            return actual->pos;
+            }
+        }
+        return -1;  
+    }
+    
+}
 
 listaTokens crear_lista_tokens();
+int buscar_simbolo_rep(listaSimbolos *lista, char* nombre);
 void mostrar_lista_tokens(FILE *archivo, listaTokens lista);
 void agregar_token(listaTokens *lista, int clase, int posicion);
 
@@ -511,6 +532,10 @@ error [^constan_entepalabra_residentificadorconstante_realsim_especialopera_arit
                 strcpy(identificador,yytext);
                 fprintf(archAtomos,"a");
                 int pos_ident=agregar_registro_simbolo(&tabla_simbolos, identificador, -1);
+                int duplic = buscar_simbolo_rep(&tabla_simbolos,identificador);
+                if (duplic != pos_ident-1 ){
+                    definiciones = identificador;
+                }
                 agregar_token(&lista_tokens,3, pos_ident-1);
                 }
 
@@ -563,6 +588,9 @@ int main(int argc, char *argv[]){
     P();
     if(c=='\0'){
         printf("Analisis léxico concluido sin errores \n");
+        if (definiciones != NULL){
+            printf("ERROR SEMANTICO: Multiplicidad en definicion de identificador %s \n",definiciones);
+        }
     }else{
         printf("Se encontraron errores durante el análsis léxico \n");
     }

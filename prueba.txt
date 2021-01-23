@@ -1,9 +1,10 @@
 @ Variables globales
-float r1,h,E,M:
-string cad, cad1, cad2:
 
 
-[ void func1()
+bool cad1,cad2:
+int cad4,cad8:
+
+[ void cad1()
   {
 	
 	return:
