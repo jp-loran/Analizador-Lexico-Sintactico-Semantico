@@ -1,7 +1,13 @@
-bool c,d:
+@ Variables globales
+float r1,h,E,M:
+string cad, cad1, cad2:
 
-[ int dos() {
-	return (2):
- }
+
+[ void func1()
+  {
+	
+	return:
+  }
 ]
+
 

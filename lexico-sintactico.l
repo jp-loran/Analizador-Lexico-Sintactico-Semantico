@@ -427,7 +427,7 @@ opera_aritme (\+)|(\*)|(-)|(\/)|(\%)
 potencia \*\*
 asignacion =
 opera_rela (<=)|(>=)|(<)|(!=)|(>)|(==)
-comentario @[\"A-Z|.|a-z|0-9| |!|\[|\]|”|#|$|%|&|/|(|)|=|?|¡|/|*|\-|+|¬|>|<|¿|¬|°|@\"]*
+comentario @[\"A-Z|.|a-z|0-9| |\t|:|,|!|\[|\]|”|#|$|%|&|/|(|)|=|?|¡|/|*|\-|+|¬|>|<|¿|¬|°|@\"]*
 error [^constan_entepalabra_residentificadorconstante_realsim_especialopera_aritmepotenciaasignacionopera_relacomentario \t\n]
 %%
 {comentario} {
