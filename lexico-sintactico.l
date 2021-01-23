@@ -452,6 +452,7 @@ error [^constan_entepalabra_residentificadorconstante_realsim_especialopera_arit
                {
                     fprintf(archSal,"%s Es una palabra reservada\n",yytext);
                     fprintf(archAtomos,"%s",palabraRes[valor].atomo);
+                    printf("%d\n",valor);
 		            agregar_token(&lista_tokens,1, valor);
                }
             }
@@ -502,6 +503,7 @@ error [^constan_entepalabra_residentificadorconstante_realsim_especialopera_arit
                 strcpy(identificador,yytext);
                 fprintf(archAtomos,"a");
                 int pos_ident=agregar_registro_simbolo(&tabla_simbolos, identificador, -1);
+                printf("%d\n",pos_ident-1);
                 agregar_token(&lista_tokens,3, pos_ident-1);
                 }
 

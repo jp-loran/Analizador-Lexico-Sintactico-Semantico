@@ -100,9 +100,9 @@ void asignaTipo(int tipo, int posicion){
     tablaSimbolos *actual=tabla_simbolos.primerRegistro;
     while(actual !=0){
         if(actual->pos==posicion && actual->tipo!=-1){
-          //  printf("Variable '%s' ya declarada \n",actual->nombre);
-           // printf("Posicion: %d\n",pos);
-            //printf("Tipo: %d\n",tipo);
+            printf("Variable '%s' ya declarada \n",actual->nombre);
+            printf("Posicion: %d\n",pos);
+            printf("Tipo: %d\n",tipo);
 
         }
         else if (actual->pos==posicion && actual->tipo==-1){
