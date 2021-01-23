@@ -102,7 +102,8 @@ void asignaTipo(int tipo, int posicion){
         }
         actual=actual->siguienteRegistro;
     }
-    printf("(%d,%d) \n",tipo,posicion);
+            printf("(%d,%d) \n",tipo,posicion);
+    
 }
 
 void revisaNoDeclarada(){
@@ -139,7 +140,6 @@ void DP(){
         return;
     }else if(c=='['||c=='a'||c=='x'||c=='i'||c=='w'||c=='h'||c=='p'||c=='u'||c=='t')
     {
-        token=siguienteValor();
         return;
     }
     else
@@ -155,7 +155,8 @@ void D(){
         L(tipo);
         if (c==':')
         {
-            //token=siguienteValor();
+            token=siguienteValor();
+            printf("Prod D valor token esperado: : leido: %c \n", token);
             c=leeSiguiente();
             return;
         }else{error(":",c);}
@@ -169,8 +170,7 @@ int V(){
     if (c=='b' || c=='c' || c=='f' || c=='n' || c=='g'){
         tipo=siguienteValor();
         c=leeSiguiente();
-        //token=siguienteValor();
-        //return;
+        
     }else
     {
         error("un tipo de dato",c);
@@ -197,13 +197,15 @@ void L(int tipo){
 void G(){
     if (c=='[')
     {
-        
+        token=siguienteValor();
         c=leeSiguiente();
         if (c=='e')
         {
+            token=siguienteValor();
             c=leeSiguiente();
             if (c==']')
             {                
+                token=siguienteValor();
                 c=leeSiguiente();
                 return;
             }else{error("]",c);}
@@ -211,7 +213,6 @@ void G(){
         }else{error("constante entera",c);}
         
     }else if(c==',' ||c==':' ||c==')' ||c=='*' ||c=='/' ||c=='%' ||c=='#' ||c=='+' ||c=='-' ||c=='!' ||c=='?' ||c=='<'||c=='>'||c=='y'||c=='m'||c=='='){
-        token=siguienteValor();
         return;
     }
     else
@@ -224,11 +225,12 @@ void G(){
 void C(){
     if (c==',')
     {
+        token=siguienteValor();
+        printf("Prod C valor token esperado: , leido: %c \n", token);
         c=leeSiguiente();
         L(tipo);
         return;
     }else if(c==':'){
-        //token=siguienteValor();
         return;
     }else
     {
@@ -238,6 +240,8 @@ void C(){
 void Y(){
     if (c=='[')
     {   
+        token=siguienteValor();
+        printf("Prod Y valor token esperado: [ leido: %c \n", token);
         c=leeSiguiente();
         tipo=VP();
 
@@ -246,26 +250,33 @@ void Y(){
             pos=siguienteValor();
             asignaTipo(tipo,pos);
             c=leeSiguiente();
-            token=siguienteValor();
+            //token=siguienteValor();
             if (c=='(')
             {
-                c=leeSiguiente();
                 token=siguienteValor();
+                printf("Prod Y valor token esperado: ( leido: %c \n", token);
+                c=leeSiguiente();
                 if (c==')')
                 {
                     token=siguienteValor();
+                    printf("Prod Y valor token esperado: ) leido: %c \n", token);
                     c=leeSiguiente();
                     if (c=='{')
                     {
+                        token=siguienteValor();
+                        printf("Prod Y valor token esperado: { leido: %c \n", token);
                         c=leeSiguiente();
                         DP();
                         B();
-                        token=siguienteValor();
                         if (c=='}')
                         {
+                            token=siguienteValor();
+                            printf("Prod Y valor token esperado: } leido: %c \n", token);
                             c=leeSiguiente();
                             if (c==']')
                             {
+                                token=siguienteValor();
+                                printf("Prod Y valor token esperado: ] leido: %c \n", token);
                                 c=leeSiguiente();
                                 return;
                             }else{error("]",c);}
@@ -307,15 +318,11 @@ int VP(){
     {
                 
         tipo=V();
-        //token=siguienteValor();
-        //printf("________%d_______\n",token);
         return tipo;
     }else if (c=='o')
     {
-        //token=siguienteValor();
-        //printf("token::: %d \n",token);
         tipo=siguienteValor();
-        c=leeSiguiente();        
+        c=leeSiguiente();     
         return tipo;
     }else{
         error("un tipo de dato",c);
@@ -326,13 +333,10 @@ void B(){
     {
         
         S();
-        token=siguienteValor();
         B();
-        token=siguienteValor();
         return;
     }
     else if(c=='}'||c==']'){
-        token=siguienteValor();
         return;
     }
     else
@@ -379,16 +383,15 @@ void S(){
     }
     else if (c=='u')
     {
-        
+        token=siguienteValor();
+        printf("Prod S valor token esperado: u leido: %c \n", token);
         c=leeSiguiente();
-        printf("%c\n",token);
-        printf("*%c\n",c);
         U();
         if (c==':')
         {
+            token=siguienteValor();
+            printf("Prod S valor token esperado: : leido: %c \n", token);
             c=leeSiguiente();
-                    printf("%c\n",token);
-        printf("*%c\n",c);
             return;
         }else
         {
@@ -398,29 +401,38 @@ void S(){
     }
     else if (c=='t')
     {
+        token=siguienteValor();
+        printf("Prod S valor token esperado: t leido: %c \n", token);
         c=leeSiguiente();
         if (c==':'){
+            token=siguienteValor();
+            printf("Prod S valor token esperado: : leido: %c \n", token);
             c=leeSiguiente();
             return;
         }error(":",c);
     }
     else if(c=='['){
-        
+        token=siguienteValor();
         c=leeSiguiente();
         if (c=='a')
         {
+            token=siguienteValor();
             c=leeSiguiente();
             if (c=='(')
             {
+                token=siguienteValor();
                 c=leeSiguiente();
                 if (c==')')
                 {
+                    token=siguienteValor();
                     c=leeSiguiente();
                     if (c==']')
                     {
+                        token=siguienteValor();
                         c=leeSiguiente();
                         if (c==':')
                         {
+                            token=siguienteValor();
                             c=leeSiguiente();
                             return;
                         }else{error(":",c);}
@@ -445,24 +457,13 @@ void U(){
         return;
     }
     else if(c=='('){
-        printf("%c\n",token);
         token=siguienteValor();
-        printf("%c\n",token);
-        printf("*%c\n",c);
         c=leeSiguiente();
-        printf("*%c\n",c);
         F();
-        printf("*%c\n",c);
-        printf("%c\n",token);
-        token=siguienteValor();
-        printf("%c\n",token);
         if (c==')')
         {
-            
             token=siguienteValor();
-            printf("%c\n",token);
             c=leeSiguiente();
-            printf("*%c\n",c);
             return;
         }else
         {
@@ -476,20 +477,25 @@ void U(){
 }
 void W(){
     if (c=='w')
-    {        
+    {   
+        token=siguienteValor();
         c=leeSiguiente();
         if(c=='('){
+            token=siguienteValor();
             c=leeSiguiente();
             R();
             if (c==')')
             {
+                token=siguienteValor();
                 c=leeSiguiente();
                 if (c=='{')
                 {
+                    token=siguienteValor();
                     c=leeSiguiente();
                     B();
                     if (c=='}')
                     {
+                        token=siguienteValor();
                         c=leeSiguiente();
                         return;
                     }else{error("}",c);}
@@ -507,27 +513,40 @@ void W(){
 void H(){
     if (c=='h')
     {
-        
+        token=siguienteValor();
+        printf("Prod H valor token esperado: h leido: %c \n", token);   
         c=leeSiguiente();
         if (c=='{')
         {
+            token=siguienteValor();
+            printf("Prod H valor token esperado: { leido: %c \n", token);            
             c=leeSiguiente();
             B();
             if (c=='}')
             {
+                token=siguienteValor();
+                printf("Prod H valor token esperado: } leido: %c \n", token);    
                c=leeSiguiente();
                if (c=='w')
                {
+                           token=siguienteValor();
+        printf("Prod H valor token esperado: w leido: %c \n", token);
                    c=leeSiguiente();
                    if (c=='(')
                    {
+                             token=siguienteValor();
+        printf("Prod H valor token esperado: ( leido: %c \n", token);  
                        c=leeSiguiente();
                        R();
                        if (')')
                        {
+                                   token=siguienteValor();
+        printf("Prod H valor token esperado: ) leido: %c \n", token);
                            c=leeSiguiente();
                            if (c==':')
                            {
+                                       token=siguienteValor();
+        printf("Prod H valor token esperado: : leido: %c \n", token);
                                c=leeSiguiente();
                                return;
                            }else{error(":",c);}
@@ -550,32 +569,50 @@ void H(){
 void X(){
     if (c=='x')
     {
+        token=siguienteValor();
+        printf("Prod X valor token esperado: x leido: %c \n", token);
         c=leeSiguiente();
         if (c=='(')
         {
+            token=siguienteValor();
+        printf("Prod X valor token esperado: ( leido: %c \n", token);    
             c=leeSiguiente();
             
             if (c=='a')
             {
+                token=siguienteValor();
+        printf("Prod X valor token esperado: POS leido: %d \n", token);    
                 c=leeSiguiente();
                 if(c==')'){
+                    token=siguienteValor();
+        printf("Prod X valor token esperado: ) leido: %c \n", token);    
                     c=leeSiguiente();
                     if (c=='{')
                     {
+                        token=siguienteValor();
+        printf("Prod X valor token esperado: { leido: %c \n", token);
                         c=leeSiguiente();
                         O();
                         if (c=='d')
                         {
+                            token=siguienteValor();
+        printf("Prod X valor token esperado: d leido: %c \n", token);    
                             c=leeSiguiente();
                             if (c=='[')
                             {
+                                token=siguienteValor();
+        printf("Prod X valor token esperado: [ leido: %c \n", token);   
                                 c=leeSiguiente();
                                 B();
                                 if (c==']')
                                 {
+                                    token=siguienteValor();
+        printf("Prod X valor token esperado: ] leido: %c \n", token);
                                     c=leeSiguiente();
                                     if (c=='}')
                                     {
+                                        token=siguienteValor();
+        printf("Prod X valor token esperado: } leido: %c \n", token);    
                                         c=leeSiguiente();
                                         return;
                                     }else{error("}",c);}
@@ -602,22 +639,34 @@ void X(){
 void O(){
     if (c=='k')
     {
+        token=siguienteValor();
+        printf("Prod O valor token esperado: k leido: %c \n", token);
         c=leeSiguiente();
         if (c=='e')
         {
+            token=siguienteValor();
+        printf("Prod O valor token esperado: e leido: %d \n", token);    
             c=leeSiguiente();
             if (c=='[')
             {
+                token=siguienteValor();
+        printf("Prod O valor token esperado: [ leido: %c \n", token);    
                 c=leeSiguiente();
                 B();
                 if (c==']')
                 {
+                    token=siguienteValor();
+        printf("Prod O valor token esperado: ] leido: %c \n", token);    
                     c=leeSiguiente();
                     if (c=='q')
                     {
+                        token=siguienteValor();
+        printf("Prod O valor token esperado: q leido: %c \n", token);    
                         c=leeSiguiente();
                         if (c==':')
                         {
+                            token=siguienteValor();
+        printf("Prod O valor token esperado: : leido: %c \n", token);    
                             c=leeSiguiente();
                             O();
                             return;
@@ -644,24 +693,36 @@ void O(){
 }
 void I(){
     if(c=='i'){
+        token=siguienteValor();
+        printf("Prod I valor token esperado: i leido: %c \n", token);
         c=leeSiguiente();
         if (c=='(')
         {
+            token=siguienteValor();
+            printf("Prod I valor token esperado: (  leido: %c \n", token);    
             c=leeSiguiente();
             R();
             if (c==')')
             {
+                token=siguienteValor();
+                printf("Prod I valor token esperado: ) leido: %c \n", token);                
                 c=leeSiguiente();
                 if (c=='{')
                 {
+                    token=siguienteValor();
+                    printf("Prod I valor token esperado: { leido: %c \n", token);
                     c=leeSiguiente();
                     B();
                     if (c=='}')
                     {
+                        token=siguienteValor();
+                        printf("Prod I valor token esperado: } leido: %c \n", token);
                         c=leeSiguiente();
                         J();
                         if (c==':')
                         {
+                            token=siguienteValor();
+                            printf("Prod I valor token esperado: :  leido: %c \n", token);
                             c=leeSiguiente();
                             return;
                         }else{error(":",c);}
@@ -680,11 +741,17 @@ void I(){
 }
 void J(){
     if (c=='l'){
+        token=siguienteValor();
+        printf("Prod J valor token esperado: l  leido: %c \n", token);
         c=leeSiguiente();
         if (c=='{'){
+            token=siguienteValor();
+            printf("Prod J valor token esperado: { leido: %c \n", token);            
             c=leeSiguiente();
             B();
             if (c=='}'){
+                token=siguienteValor();
+                printf("Prod I valor token esperado: }  leido: %c \n", token);
                 c=leeSiguiente();
                 return;
             }
@@ -698,17 +765,29 @@ void J(){
 }
 void N(){
     if (c=='p'){
+        token=siguienteValor();
+        printf("Prod P valor token esperado: p leido: %c \n", token);    
         c=leeSiguiente();
         if (c=='['){
+            token=siguienteValor();
+        printf("Prod P valor token esperado: [ leido: %c \n", token);    
             c=leeSiguiente();
             if (c=='e'){
+                token=siguienteValor();
+        printf("Prod P valor token esperado: e leido: %d \n", token);
                 c=leeSiguiente();
                 if (c==']'){
+                    token=siguienteValor();
+        printf("Prod P valor token esperado: ] leido: %c \n", token);    
                     c=leeSiguiente();
                     if (c=='{'){
+                        token=siguienteValor();
+        printf("Prod P valor token esperado: { leido: %c \n", token);    
                         c=leeSiguiente();
                         B();
                         if (c=='}'){
+                            token=siguienteValor();
+        printf("Prod P valor token esperado: } leido: %c \n", token);    
                             c=leeSiguiente();
                             return;
                         }else error(" }",c);
@@ -728,6 +807,8 @@ void R(){
 }
 void K(){
     if (c=='!' || c=='?' || c=='>' || c=='<' || c=='y' ||c=='m'){
+        token=siguienteValor();
+        printf("Prod K valor token esperado: OP_REL leido: %c \n", token);
         c=leeSiguiente();
         return;
     }else error(" operador relacional",c);
@@ -766,24 +847,32 @@ void T(){
 }
 void TP(){
     if (c=='*'){
+        token=siguienteValor();
+        printf("Prod TP valor token esperado: * leido: %c \n", token);
         c=leeSiguiente();
         F();
         TP();
         return;
     }
     else if(c=='/'){
+        token=siguienteValor();
+        printf("Prod TP valor token esperado: / leido: %c \n", token);
         c=leeSiguiente();
         F();
         TP();
         return;
     }
     else if(c=='%'){
+        token=siguienteValor();
+        printf("Prod TP valor token esperado: %% leido: %c \n", token);        
         c=leeSiguiente();
         F();
         TP();
         return;
     }
     else if(c=='#'){
+        token=siguienteValor();
+        printf("Prod TP valor token esperado: # leido: %c \n", token);
         c=leeSiguiente();
         F();
         TP();
@@ -796,35 +885,50 @@ void TP(){
 }
 void F(){
     if (c=='('){
+        token=siguienteValor();
+        printf("Prod F valor token esperado: ( leido: %c \n", token);
         c=leeSiguiente();
         E();
         if(c==')'){
+            token=siguienteValor();
+            printf("Prod F valor token esperado: ) leido: %c \n", token);
             c=leeSiguiente();
             return;
         }else error("(",c);
     }
     else if(c=='a'){
+        token=siguienteValor();
+        printf("Prod F valor token esperado: POS leido: %d \n", token);
         c=leeSiguiente();
         G();
         return;
     }
     else if(c=='e'){
+        token=siguienteValor();
+        printf("Prod F valor token esperado: e leido: %d \n", token);
         c=leeSiguiente();
         return;
     }
     else if(c=='r'){
+        token=siguienteValor();
+        printf("Prod F valor token esperado: r leido: %c \n", token);
         c=leeSiguiente();
         return;
     }
     else if (c=='['){
+        token=siguienteValor();
         c=leeSiguiente();
         if (c=='a'){
+            token=siguienteValor();
             c=leeSiguiente();
             if(c=='('){
+                token=siguienteValor();
                 c=leeSiguiente();
                 if(c==')'){
+                    token=siguienteValor();
                     c=leeSiguiente();
                     if(c==']'){
+                        token=siguienteValor();
                         c=leeSiguiente();
                         return;
                     }else{error(" ]",c);}
@@ -836,12 +940,18 @@ void F(){
 }
 void A(){
     if (c=='a'){
+        token=siguienteValor();
+        printf("Prod A valor token esperado: POS leido: %d \n", token);
         c=leeSiguiente();
         G();
         if (c=='='){
+            token=siguienteValor();
+            printf("Prod A valor token esperado: = leido: %c \n", token);
             c=leeSiguiente();
             M();
             if (c==':'){
+                token=siguienteValor();
+                printf("Prod A valor token esperado: : leido: %c \n", token);
                 c=leeSiguiente();
                 return;
             }else {error(":",c);}
@@ -854,6 +964,8 @@ void M(){
         return;
     }
     else if(c=='+'){
+        token=siguienteValor();
+        printf("Prod M valor token esperado: + leido: %c \n", token);
         c=leeSiguiente();
         Q();
         Z();
@@ -862,6 +974,8 @@ void M(){
 }
 void Z(){
     if(c==','){
+        token=siguienteValor();
+        printf("Prod Z valor token esperado: , leido: %c \n", token);
         c=leeSiguiente();
         Q();
         Z();
@@ -874,11 +988,15 @@ void Z(){
 }
 void Q(){
     if(c=='a'){
+        token=siguienteValor();
+        printf("Prod Q valor token esperado: POS leido: %d \n", token);
         c=leeSiguiente();
         G();
         return;
     }
     else if(c=='s'){
+        token=siguienteValor();
+        printf("Prod Q valor token esperado: s leido: %c \n", token);
         c=leeSiguiente();
         return;
     }
@@ -887,6 +1005,8 @@ void Q(){
 }
 void QP(){
     if(c=='s'){
+        token=siguienteValor();
+        printf("Prod A valor token esperado: s leido: %c \n", token);
         c=leeSiguiente();
         return;
     }
