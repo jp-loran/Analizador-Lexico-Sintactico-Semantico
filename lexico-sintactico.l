@@ -131,16 +131,16 @@ int agregar_registro_simbolo(listaSimbolos *lista, char* nombre, int tipo){
         if (lista->primerRegistro==NULL)
         {
             tablaSimbolos *registro = (tablaSimbolos*)malloc(sizeof(tablaSimbolos));
-            registro->pos=posicion;
+            registro->pos=0;
             registro->nombre=nombre;
             registro->tipo=tipo;
             registro->siguienteRegistro=NULL;
             lista->primerRegistro=registro;
-            posicion ++;
             return posicion;
         }
         else
         {
+            posicion ++;
             tablaSimbolos *actual = lista->primerRegistro;
             while(actual->siguienteRegistro != 0){
                 actual=actual->siguienteRegistro;
@@ -153,7 +153,7 @@ int agregar_registro_simbolo(listaSimbolos *lista, char* nombre, int tipo){
             nuevoRegistro->tipo=tipo;
             nuevoRegistro->siguienteRegistro=NULL;
             actual->siguienteRegistro=nuevoRegistro;
-            posicion ++;
+            //posicion ++;
             return posicion;
         }
     }
@@ -407,6 +407,29 @@ int crearArrayValores(listaTokens lista){
 }
 
 
+int busquedaListaIdentificadores(listaSimbolos *lista,char* nombre) {
+    if(lista->primerRegistro==NULL){
+        return -1;
+    }   
+    else
+    {
+        tablaSimbolos *actual = lista->primerRegistro;
+        if(!strcmp(actual->nombre, nombre)){
+            return 0;
+        }
+        int contadorPos=0;
+        while (actual->siguienteRegistro != 0) {
+            actual=actual->siguienteRegistro;
+            contadorPos++;
+            if(!strcmp(actual->nombre, nombre)){
+                return contadorPos;
+            }
+        }
+        return -1;
+    }   
+}
+
+
 %}
 constan_ente [1-9][0-9]{0,13}
 palabra_res bool|break|case|char|continue|default|do|else|float|for|if|int|return|string|switch|while|void
@@ -436,6 +459,7 @@ error [^constan_entepalabra_residentificadorconstante_realsim_especialopera_arit
         fprintf(archAtomos,"e");
 	    agregar_token(&lista_tokens,6, atoi(yytext));
         }
+
 {constante_real} {
          fprintf(archSal, "%s Es una constante real \n", yytext);
          char *constante=malloc(sizeof(yytext));
@@ -497,12 +521,13 @@ error [^constan_entepalabra_residentificadorconstante_realsim_especialopera_arit
             }
          }
 {identificador} {
+                int pos_ident;
                 fprintf(archSal, "%s Es un identificador\n", yytext);
                 char *identificador=malloc(sizeof(yytext));
                 strcpy(identificador,yytext);
                 fprintf(archAtomos,"a");
-                int pos_ident=agregar_registro_simbolo(&tabla_simbolos, identificador, -1);
-                agregar_token(&lista_tokens,3, pos_ident-1);
+                agregar_registro_simbolo(&tabla_simbolos, identificador, -1);
+                agregar_token(&lista_tokens,3, busquedaListaIdentificadores(&tabla_simbolos,identificador));
                 }
 
 {cadena} {
@@ -551,9 +576,10 @@ int main(int argc, char *argv[]){
     P();
     revisaNoDeclarada();
     if(c=='\0'){
-        printf("Analisis léxico y sintáctico concluido sin errores \n");
+        printf("\n");
+        printf("Analisis léxico, sintáctico y semántico concluido con exito \n");
     }else{
-        printf("Se encontraron errores durante el análsis léxico \n");
+        printf("Se encontraron errores durante el análsis \n");
     }
 
     mostrar_tabla_simbolos(archTablas,tabla_simbolos);
