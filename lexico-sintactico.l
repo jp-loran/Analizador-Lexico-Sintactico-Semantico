@@ -575,7 +575,7 @@ int main(int argc, char *argv[]){
 
     P();
     revisaNoDeclarada();
-    if(c=='\0'){
+    if(c==EOF){
         printf("\n");
         printf("Analisis léxico, sintáctico y semántico concluido con exito \n");
     }else{
